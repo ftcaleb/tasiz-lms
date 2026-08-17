@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="bg-plane">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>TASEZ Training Academy — Learner Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  /* ============================================================
+     LAYER 1 — BRAND CONSTANTS (mode-invariant)
+     ============================================================ */
+  :root {
+    --brand-red: #C8102E;
+    --brand-red-deep: #9E0B22;
+    --brand-gold: #D4A94B;
+    --brand-charcoal: #14161A;
+    --brand-charcoal-deep: #0D0F12;
+  }
+
+  /* ============================================================
+     LAYER 2 — SEMANTIC TOKENS · LIGHT
+     ============================================================ */
+  :root {
+    --plane: #EEF0F3;
+    --surface: #FFFFFF;
+    --surface-2: #F6F7F9;
+    --surface-3: #EDEFF2;
+
+    --rail: var(--brand-charcoal);
+    --rail-ink: #F4F5F7;
+    --rail-ink-2: #AEB4BE;
+    --rail-ink-3: #6C7480;
+    --rail-line: #262A31;
+    --rail-active: rgba(200,16,46,0.16);
+
+    --ink-1: #14161A;
+    --ink-2: #464C56;
+    --ink-3: #737B87;
+    --ink-inverse: #FFFFFF;
+
+    --line: #E3E6EA;
+    --line-2: #EDEFF2;
+    --line-strong: #CDD2D9;
+
+    --shadow-sm: 0 1px 2px rgba(16,18,22,0.06), 0 1px 1px rgba(16,18,22,0.04);
+    --shadow-md: 0 4px 12px rgba(16,18,22,0.08), 0 2px 4px rgba(16,18,22,0.05);
+    --shadow-lg: 0 12px 32px rgba(16,18,22,0.12), 0 4px 8px rgba(16,18,22,0.06);
+    --shadow-xl: 0 24px 60px rgba(16,18,22,0.18);
+    --shadow-accent: 0 8px 24px rgba(200,16,46,0.20);
+
+    --accent: var(--brand-red);
+    --accent-hover: var(--brand-red-deep);
+    --accent-ink: #FFFFFF;
+    --accent-wash: rgba(200,16,46,0.08);
+    --accent-wash-2: rgba(200,16,46,0.14);
+    --focus-ring: rgba(200,16,46,0.45);
+
+    --radius: 14px;
+    --radius-sm: calc(var(--radius) - 8px);
+    --radius-md: calc(var(--radius) - 4px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 8px);
+
+    /* status triplets — dot / bg / fg */
+    --st-applied-dot: #64748B;   --st-applied-bg: #EEF1F5;   --st-applied-fg: #3F4A5A;
+    --st-enrolled-dot: #2563EB;  --st-enrolled-bg: #E8EEFE;  --st-enrolled-fg: #1E45A8;
+    --st-placed-dot: #7C3AED;    --st-placed-bg: #F0EAFE;    --st-placed-fg: #5B21B6;
+    --st-completed-dot: #15803D; --st-completed-bg: #E6F4EA; --st-completed-fg: #14622F;
+    --st-pending-dot: #B45309;   --st-pending-bg: #FBF0DC;   --st-pending-fg: #8A4708;
+    --st-flagged-dot: var(--brand-red);    --st-flagged-bg: rgba(200,16,46,0.10);   --st-flagged-fg: #9E0B22;
+    --st-suspended-dot: var(--brand-red);  --st-suspended-bg: rgba(200,16,46,0.14); --st-suspended-fg: #7E0A1B;
+    --st-certified-dot: var(--brand-gold); --st-certified-bg: #F7EFDA; --st-certified-fg: #8A6A1E;
+
+    /* role identity — bg / fg / ring */
+    --role-learner-bg: #E8EEFE;     --role-learner-fg: #1E45A8;     --role-learner-ring: #2563EB;
+    --role-facilitator-bg: #E6F4EA; --role-facilitator-fg: #14622F; --role-facilitator-ring: #15803D;
+    --role-sponsor-bg: #F7EFDA;     --role-sponsor-fg: #8A6A1E;     --role-sponsor-ring: var(--brand-gold);
+    --role-admin-bg: rgba(200,16,46,0.10); --role-admin-fg: #9E0B22; --role-admin-ring: var(--brand-red);
+
+    /* data-viz ordinal ramp gold -> red */
+    --viz-1: #D4A94B;
+    --viz-2: #D98240;
+    --viz-3: #CF4F35;
+    --viz-4: #C8102E;
+    --viz-grid: #E3E6EA;
+    --viz-axis: #9AA1AC;
+    --viz-muted: #C6CBD2;
+  }
+
+  /* ============================================================
+     SEMANTIC TOKENS · DARK  (pure token swap)
+     ============================================================ */
+  :root[data-theme="dark"] {
+    --plane: #0D0F12;
+    --surface: #16191F;
+    --surface-2: #1C2027;
+    --surface-3: #232830;
+
+    --rail: var(--brand-charcoal-deep);
+    --rail-ink: #F4F5F7;
+    --rail-ink-2: #9BA2AD;
+    --rail-ink-3: #676E79;
+    --rail-line: #20242B;
+    --rail-active: rgba(200,16,46,0.24);
+
+    --ink-1: #F1F3F6;
+    --ink-2: #B7BEC9;
+    --ink-3: #828A96;
+    --ink-inverse: #14161A;
+
+    --line: #262B33;
+    --line-2: #20242B;
+    --line-strong: #333A44;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.6);
+    --shadow-xl: 0 24px 60px rgba(0,0,0,0.7);
+    --shadow-accent: 0 8px 24px rgba(200,16,46,0.35);
+
+    --accent: #E4324B;
+    --accent-hover: #F0435C;
+    --accent-ink: #FFFFFF;
+    --accent-wash: rgba(228,50,75,0.14);
+    --accent-wash-2: rgba(228,50,75,0.22);
+    --focus-ring: rgba(228,50,75,0.55);
+
+    --st-applied-dot: #8A94A3;   --st-applied-bg: #262B33;   --st-applied-fg: #C2C9D3;
+    --st-enrolled-dot: #5B8DEF;  --st-enrolled-bg: #1B2740;  --st-enrolled-fg: #A9C3F5;
+    --st-placed-dot: #A374F0;    --st-placed-bg: #271E3F;    --st-placed-fg: #CBB4F5;
+    --st-completed-dot: #3FB463; --st-completed-bg: #14291C; --st-completed-fg: #9BD9AE;
+    --st-pending-dot: #E0942E;   --st-pending-bg: #2E2413;   --st-pending-fg: #EAC286;
+    --st-flagged-dot: #E4324B;   --st-flagged-bg: rgba(228,50,75,0.16); --st-flagged-fg: #F2909D;
+    --st-suspended-dot: #E4324B; --st-suspended-bg: rgba(228,50,75,0.24); --st-suspended-fg: #F6A6B0;
+    --st-certified-dot: var(--brand-gold); --st-certified-bg: #2C2413; --st-certified-fg: #E4C583;
+
+    --role-learner-bg: #1B2740;     --role-learner-fg: #A9C3F5;     --role-learner-ring: #5B8DEF;
+    --role-facilitator-bg: #14291C; --role-facilitator-fg: #9BD9AE; --role-facilitator-ring: #3FB463;
+    --role-sponsor-bg: #2C2413;     --role-sponsor-fg: #E4C583;     --role-sponsor-ring: var(--brand-gold);
+    --role-admin-bg: rgba(228,50,75,0.16); --role-admin-fg: #F2909D; --role-admin-ring: #E4324B;
+
+    --viz-1: #E4C583;
+    --viz-2: #E0975A;
+    --viz-3: #DB6A52;
+    --viz-4: #E4324B;
+    --viz-grid: #262B33;
+    --viz-axis: #5B636E;
+    --viz-muted: #3A4049;
+  }
+
+  /* ============================================================
+     THEME NAMESPACE — utilities read tokens
+     ============================================================ */
+  @theme inline {
+    --color-plane: var(--plane);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
+
+    --color-rail: var(--rail);
+    --color-rail-ink: var(--rail-ink);
+    --color-rail-ink-2: var(--rail-ink-2);
+    --color-rail-ink-3: var(--rail-ink-3);
+    --color-rail-line: var(--rail-line);
+
+    --color-ink-1: var(--ink-1);
+    --color-ink-2: var(--ink-2);
+    --color-ink-3: var(--ink-3);
+    --color-ink-inverse: var(--ink-inverse);
+
+    --color-line: var(--line);
+    --color-line-2: var(--line-2);
+    --color-line-strong: var(--line-strong);
+
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-ink: var(--accent-ink);
+    --color-accent-wash: var(--accent-wash);
+    --color-accent-wash-2: var(--accent-wash-2);
+
+    --color-gold: var(--brand-gold);
+
+    --radius-token: var(--radius);
+
+    --font-display: "Archivo", ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* ============================================================
+     LAYER: BASE
+     ============================================================ */
+  @layer base {
+    * { border-color: var(--line); }
+    html { background: var(--plane); -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--ink-1);
+      background: var(--plane);
+      font-feature-settings: "cv02","cv03","cv04","cv11";
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    h1,h2,h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+    ::selection { background: var(--accent-wash-2); color: var(--ink-1); }
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+      box-shadow: 0 0 0 4px var(--focus-ring);
+    }
+    input:focus-visible { box-shadow: 0 0 0 4px var(--focus-ring); }
+  }
+
+  /* ============================================================
+     LAYER: COMPONENTS  (tokens only)
+     ============================================================ */
+  @layer components {
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .card-flush {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .num { font-variant-numeric: tabular-nums; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.2rem 0.6rem; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 600; line-height: 1.2;
+      white-space: nowrap;
+    }
+    .badge::before {
+      content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px;
+      background: currentColor; flex: none;
+    }
+    .badge-applied   { background: var(--st-applied-bg);   color: var(--st-applied-fg); }
+    .badge-enrolled  { background: var(--st-enrolled-bg);  color: var(--st-enrolled-fg); }
+    .badge-placed    { background: var(--st-placed-bg);    color: var(--st-placed-fg); }
+    .badge-completed { background: var(--st-completed-bg); color: var(--st-completed-fg); }
+    .badge-certified { background: var(--st-certified-bg); color: var(--st-certified-fg); }
+    .badge-pending   { background: var(--st-pending-bg);   color: var(--st-pending-fg); }
+    .badge-flagged   { background: var(--st-flagged-bg);   color: var(--st-flagged-fg); }
+    .badge-suspended { background: var(--st-suspended-bg); color: var(--st-suspended-fg); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: var(--accent); color: var(--accent-ink);
+      font-weight: 600; font-size: 0.875rem;
+      padding: 0.6rem 1.1rem; border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm); transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+      cursor: pointer; border: 1px solid transparent;
+    }
+    .btn-primary:hover { background: var(--accent-hover); box-shadow: var(--shadow-accent); }
+    .btn-primary:active { transform: translateY(1px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: var(--surface); color: var(--ink-2);
+      font-weight: 600; font-size: 0.875rem;
+      padding: 0.55rem 1rem; border-radius: var(--radius-md);
+      border: 1px solid var(--line-strong); cursor: pointer;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+    .btn-ghost:hover { background: var(--surface-2); color: var(--ink-1); border-color: var(--line-strong); }
+
+    .rail-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 0.75rem; border-radius: var(--radius-md);
+      color: var(--rail-ink-2); font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; position: relative; width: 100%; text-align: left;
+      transition: background .16s ease, color .16s ease;
+      border: 1px solid transparent;
+    }
+    .rail-item:hover { background: rgba(255,255,255,0.04); color: var(--rail-ink); }
+    .rail-item[aria-current="true"] {
+      background: var(--rail-active); color: var(--rail-ink);
+    }
+    .rail-item[aria-current="true"]::before {
+      content: ""; position: absolute; left: -0.5rem; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 1.35rem; border-radius: 999px; background: var(--brand-red);
+    }
+
+    .stat {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius-lg); padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-fig { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+    .fi-scroll { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+    .fi-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+    .fi-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
+    .fi-scroll::-webkit-scrollbar-track { background: transparent; }
+
+    .fi-skeleton {
+      position: relative; overflow: hidden;
+      background: var(--surface-3); border-radius: var(--radius-sm);
+    }
+    .fi-skeleton::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, var(--surface-2), transparent);
+      transform: translateX(-100%); animation: shimmer 1.6s infinite;
+    }
+    @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+    .timeline-node {
+      width: 1.5rem; height: 1.5rem; border-radius: 999px; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--line-strong); background: var(--surface); color: var(--ink-3);
+    }
+    .timeline-node.done { border-color: var(--brand-gold); background: var(--st-certified-bg); color: var(--st-certified-fg); }
+    .timeline-node.current { border-color: var(--accent); color: var(--accent); }
+    .timeline-node.current::after {
+      content: ""; position: absolute; width: 1.5rem; height: 1.5rem; border-radius: 999px;
+      border: 2px solid var(--accent); animation: nodepulse 2s ease-out infinite;
+    }
+  }
+
+  /* ============================================================
+     LAYER: UTILITIES
+     ============================================================ */
+  @layer utilities {
+    .type-display-1 { font-size: 1.75rem; line-height: 1.15; font-weight: 800; }
+    .type-display-2 { font-size: 1.35rem; line-height: 1.2; font-weight: 700; }
+    .type-h { font-size: 1.05rem; line-height: 1.3; font-weight: 700; }
+    .type-body { font-size: 0.9375rem; line-height: 1.55; }
+    .type-data { font-size: 0.8125rem; line-height: 1.45; }
+    .type-micro { font-size: 0.75rem; line-height: 1.4; }
+    .tnum { font-variant-numeric: tabular-nums; }
+    .dot-pulse { position: relative; }
+    .dot-pulse::after {
+      content:""; position:absolute; inset:0; border-radius:999px;
+      background: var(--brand-red); animation: dotpulse 2s ease-out infinite;
+    }
+  }
+
+  @keyframes dotpulse {
+    0% { transform: scale(1); opacity: .7; }
+    70% { transform: scale(2.6); opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes nodepulse {
+    0% { transform: scale(1); opacity: .6; }
+    70% { transform: scale(1.7); opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes railIn { from { transform: translateX(-16px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes fadeUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .anim-rail-in { animation: railIn .24s ease-out both; }
+  .anim-fade-up { animation: fadeUp .3s ease-out both; }
+
+  /* ============================================================
+     PRINT — force light tokens, unlock overflow, hide chrome
+     ============================================================ */
+  @media print {
+    :root, :root[data-theme="dark"] {
+      --plane:#fff; --surface:#fff; --surface-2:#fff; --surface-3:#f4f4f4;
+      --ink-1:#111; --ink-2:#333; --ink-3:#555; --line:#ccc; --line-strong:#aaa;
+      --shadow-sm:none; --shadow-md:none; --shadow-lg:none; --shadow-xl:none; --shadow-accent:none;
+    }
+    .no-print { display: none !important; }
+    body { background:#fff !important; }
+    .print-region { position: static !important; overflow: visible !important; height: auto !important; max-height: none !important; inset: auto !important; }
+    .card, .card-flush { box-shadow: none !important; border:1px solid #ccc !important; break-inside: avoid; }
+    .fi-scroll { overflow: visible !important; }
+    main { padding: 0 !important; }
+    @page { size: A4; margin: 16mm; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     SSO LOGIN SCREEN
+     ========================================================= -->
+<div id="login" class="fixed inset-0 z-50 flex items-center justify-center px-5" style="background: var(--brand-charcoal-deep);">
+  <div class="absolute inset-0 opacity-[0.5] pointer-events-none"
+       style="background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 22px), radial-gradient(circle at 20% 15%, rgba(200,16,46,0.14), transparent 45%);"></div>
+  <div class="relative w-full max-w-[420px]">
+    <div class="flex items-center gap-3 mb-8">
+      <span class="inline-block w-4 h-4 rounded-[3px]" style="background: var(--brand-gold);"></span>
+      <span class="type-display-1 tracking-tight" style="color:#fff; font-family: var(--font-display); font-weight:800;">TASEZ</span>
+      <span class="type-micro" style="color: var(--rail-ink-2);">Training Academy</span>
+    </div>
+    <div class="rounded-[18px] p-7" style="background: var(--brand-charcoal); border:1px solid var(--rail-line); box-shadow: var(--shadow-xl);">
+      <h1 class="type-display-2 mb-1" style="color:#fff;">Sign in</h1>
+      <p class="type-micro mb-6" style="color: var(--rail-ink-2);">Single Sign-On — one identity across all 13 modules</p>
+      <form id="loginForm" class="flex flex-col gap-4">
+        <label class="flex flex-col gap-1.5">
+          <span class="type-micro font-semibold" style="color: var(--rail-ink-2);">Work email</span>
+          <input type="email" value="m.malebo@tasez.co.za" autocomplete="username"
+            class="num rounded-[10px] px-3.5 py-2.5 text-[0.9rem]"
+            style="background: var(--brand-charcoal-deep); border:1px solid var(--rail-line); color:#fff;" />
+        </label>
+        <label class="flex flex-col gap-1.5">
+          <span class="type-micro font-semibold" style="color: var(--rail-ink-2);">Password</span>
+          <input type="password" value="demo-access-2026" autocomplete="current-password"
+            class="rounded-[10px] px-3.5 py-2.5 text-[0.9rem]"
+            style="background: var(--brand-charcoal-deep); border:1px solid var(--rail-line); color:#fff;" />
+        </label>
+        <button id="loginBtn" type="submit" class="btn-primary mt-2 w-full py-2.5">
+          <span id="loginBtnLabel">Sign in</span>
+          <svg id="loginSpinner" class="hidden animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
+        </button>
+      </form>
+      <p class="type-micro mt-5 pt-4" style="color: var(--rail-ink-3); border-top:1px solid var(--rail-line);">
+        POPIA-compliant · Hosted in South Africa · Protected by TASEZ ICT
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     APP SHELL
+     ========================================================= -->
+<div id="app" class="hidden min-h-screen">
+  <!-- mobile drawer backdrop -->
+  <div id="railBackdrop" class="no-print hidden fixed inset-0 z-30 bg-black/50 lg:hidden"></div>
+
+  <!-- LEFT RAIL -->
+  <aside id="rail" class="no-print fixed z-40 top-0 left-0 h-screen w-[264px] flex flex-col -translate-x-full lg:translate-x-0 transition-transform duration-200"
+    style="background: var(--rail); border-right:1px solid var(--rail-line);">
+    <div class="flex items-center gap-2.5 px-5 h-16 flex-none" style="border-bottom:1px solid var(--rail-line);">
+      <span class="inline-block w-3.5 h-3.5 rounded-[3px]" style="background: var(--brand-gold);"></span>
+      <span data-railfull class="font-display font-extrabold text-[1.05rem]" style="color:#fff;">TASEZ</span>
+      <span data-railfull class="type-micro" style="color: var(--rail-ink-3);">Academy</span>
+    </div>
+    <nav id="railNav" class="flex-1 overflow-y-auto fi-scroll px-3 py-4 flex flex-col gap-4"></nav>
+    <div class="px-3 py-3 flex-none" style="border-top:1px solid var(--rail-line);">
+      <button id="railCollapse" class="rail-item" aria-label="Collapse navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span data-railfull>Collapse</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN COLUMN -->
+  <div id="shellMain" class="lg:pl-[264px] transition-[padding] duration-200 min-h-screen flex flex-col">
+    <!-- TOPBAR -->
+    <header class="no-print sticky top-0 z-20 h-16 flex-none flex items-center gap-3 px-4 lg:px-6"
+      style="background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(8px); border-bottom:1px solid var(--line);">
+      <button id="railToggle" class="lg:hidden btn-ghost !p-2" aria-label="Open navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="relative flex-1 max-w-[420px]">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search learners, programmes, reports…" aria-label="Global search"
+          class="type-data w-full rounded-[10px] pl-9 pr-3 py-2 bg-surface-2"
+          style="border:1px solid var(--line);" />
+      </div>
+      <div class="ml-auto flex items-center gap-1.5">
+        <button id="themeToggle" class="btn-ghost !p-2" aria-label="Toggle light and dark theme">
+          <svg id="iconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg id="iconSun" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button id="bellBtn" class="btn-ghost !p-2 relative" aria-label="Notifications and anomaly alerts">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span id="bellDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full dot-pulse" style="background: var(--brand-red);"></span>
+        </button>
+        <button class="hidden sm:flex items-center gap-2 rounded-full pl-2 pr-3 py-1" style="border:1px solid var(--line); background: var(--surface-2);" aria-label="Role switcher: Maria Malebo, Executive">
+          <span class="w-7 h-7 rounded-full flex items-center justify-center text-[0.7rem] font-bold" style="background: var(--role-admin-bg); color: var(--role-admin-fg); box-shadow: 0 0 0 2px var(--role-admin-ring);">MM</span>
+          <span class="text-left leading-tight">
+            <span class="block type-micro font-semibold text-ink-1">Maria Malebo</span>
+            <span class="block type-micro text-ink-3">Executive · ICT</span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCREEN CONTAINER -->
+    <main id="screen" class="flex-1 px-4 lg:px-6 py-6 max-w-[1400px] w-full mx-auto"></main>
+  </div>
+</div>
+
+<!-- ANOMALY DRAWER (bell) -->
+<div id="drawer" class="no-print hidden fixed inset-0 z-50">
+  <div id="drawerBackdrop" class="absolute inset-0 bg-black/50"></div>
+  <aside class="absolute top-0 right-0 h-full w-full max-w-[380px] p-5 overflow-y-auto fi-scroll anim-fade-up"
+    style="background: var(--surface); border-left:1px solid var(--line); box-shadow: var(--shadow-xl);">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="type-h text-ink-1">Notifications</h2>
+      <button id="drawerClose" class="btn-ghost !p-2" aria-label="Close notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="drawerBody" class="flex flex-col gap-3"></div>
+  </aside>
+</div>
+
+<!-- CERTIFICATE / MODAL -->
+<div id="modal" class="no-print hidden fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
+  <div id="modalBackdrop" class="absolute inset-0 bg-black/60"></div>
+  <div class="relative w-full max-w-[720px] max-h-full overflow-y-auto fi-scroll anim-fade-up">
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* =========================================================
+   DATA — single immutable source
+   ========================================================= */
+const DATA = Object.freeze({
+  stats: [
+    { key:"learners", label:"Active learners", value:1247, prefix:"", suffix:"" },
+    { key:"placements", label:"Host placements", value:312, prefix:"", suffix:"" },
+    { key:"stipends", label:"Stipends disbursed YTD", value:18.4, prefix:"R ", suffix:"M", decimals:1 },
+    { key:"compliance", label:"Compliance score", value:96, prefix:"", suffix:"%" }
+  ],
+  anomalies: [
+    { id:"a1", name:"Sipho Dlamini",  idmask:"890714 5*** ***", programme:"Automotive Motor Mechanic (NQF 5)", stipend:4200 },
+    { id:"a2", name:"Nomsa Radebe",   idmask:"920228 6*** ***", programme:"Mechatronics Technician (NQF 6)",  stipend:4600 },
+    { id:"a3", name:"Kagiso Molefe",  idmask:"871105 5*** ***", programme:"Automotive Motor Mechanic (NQF 5)", stipend:4200 }
+  ],
+  wastagePrevented: 142800,
+  costCohort: {
+    title:"Cost per artisan cohort (3-year programme)",
+    cohorts:[
+      { name:"Cohort 2023", seg:{ Training:1850000, COIDA:96000, UIF:72000, Stipends:1512000, PPE:180000 } },
+      { name:"Cohort 2024", seg:{ Training:1980000, COIDA:104000, UIF:78000, Stipends:1638000, PPE:196000 } },
+      { name:"Cohort 2025", seg:{ Training:2120000, COIDA:112000, UIF:84000, Stipends:1764000, PPE:210000 } },
+      { name:"Cohort 2026", seg:{ Training:2260000, COIDA:120000, UIF:90000, Stipends:1890000, PPE:224000 } }
+    ],
+    order:["Training","COIDA","UIF","Stipends","PPE"]
+  },
+  compliance: [
+    { label:"QCTO accreditation", value:"Valid to 2028", status:"completed" },
+    { label:"SETA reporting", value:"Submitted · Q1", status:"enrolled" },
+    { label:"POPIA", value:"Compliant · SA-hosted", status:"completed" },
+    { label:"FMPPI indicators", value:"11 / 12 met", status:"pending" }
+  ],
+  learners: [
+    { id:"L001", name:"Thabo Nkosi",     idmask:"960312 5*** ***", programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"merSETA", host:"BMW Group Plant Rosslyn", status:"placed", progress:67 },
+    { id:"L002", name:"Lerato Mokoena",  idmask:"980521 6*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"NSF",    host:"Ford Silverton", status:"enrolled", progress:41 },
+    { id:"L003", name:"Sipho Dlamini",   idmask:"890714 5*** ***", programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"merSETA", host:"BMW Group Plant Rosslyn", status:"flagged", progress:58 },
+    { id:"L004", name:"Annelie Botha",   idmask:"010118 0*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"merSETA", host:"Ford Silverton", status:"placed", progress:73 },
+    { id:"L005", name:"Naledi Khumalo",  idmask:"000904 1*** ***", programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"NSF",    host:"BMW Group Plant Rosslyn", status:"completed", progress:100 },
+    { id:"L006", name:"Bongani Zulu",    idmask:"970630 5*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"merSETA", host:"Ford Silverton", status:"applied", progress:8 },
+    { id:"L007", name:"Precious Mahlangu",idmask:"990211 6*** ***",programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"merSETA", host:"BMW Group Plant Rosslyn", status:"enrolled", progress:35 },
+    { id:"L008", name:"Nomsa Radebe",    idmask:"920228 6*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"NSF",    host:"Ford Silverton", status:"flagged", progress:62 },
+    { id:"L009", name:"Tumelo Sithole",  idmask:"010730 0*** ***", programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"merSETA", host:"BMW Group Plant Rosslyn", status:"placed", progress:54 },
+    { id:"L010", name:"Zanele Mabaso",   idmask:"981217 6*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"merSETA", host:"Ford Silverton", status:"enrolled", progress:29 },
+    { id:"L011", name:"Kagiso Molefe",   idmask:"871105 5*** ***", programme:"Automotive Motor Mechanic (NQF 5)", sponsor:"NSF",    host:"BMW Group Plant Rosslyn", status:"suspended", progress:60 },
+    { id:"L012", name:"Refilwe Diale",   idmask:"000523 1*** ***", programme:"Mechatronics Technician (NQF 6)",  sponsor:"merSETA", host:"Ford Silverton", status:"placed", progress:48 }
+  ],
+  learnerDetail: {
+    name:"Thabo Nkosi", idmask:"960312 5*** ***", programme:"Occupational Certificate: Automotive Motor Mechanic (NQF 5)",
+    sponsor:"merSETA Discretionary Grant", host:"BMW Group Plant Rosslyn",
+    timeline:[
+      { title:"Online application", date:"12 Jan 2025", state:"done", note:"Applied via TASEZ Academy portal" },
+      { title:"Selection & enrolment", date:"03 Feb 2025", state:"done", note:"Enrolled · Cohort 2025" },
+      { title:"RPL credits awarded", date:"20 Feb 2025", state:"done", note:"Recognition of Prior Learning · 24 credits", gold:true },
+      { title:"Workplace placement", date:"11 Mar 2025", state:"done", note:"BMW Group Plant Rosslyn" },
+      { title:"Trade test scheduled", date:"14 Oct 2026", state:"current", note:"NAMB · Olifantsfontein" },
+      { title:"Certification", date:"Projected Q1 2027", state:"future", note:"Awaiting trade test result" }
+    ],
+    stipends:[
+      { month:"May 2026", amount:4200, status:"completed" },
+      { month:"Jun 2026", amount:4200, status:"completed" },
+      { month:"Jul 2026", amount:4200, status:"completed" },
+      { month:"Aug 2026", amount:4200, status:"pending" }
+    ],
+    documents:[
+      { name:"Certified ID copy", meta:"Verified · Home Affairs" },
+      { name:"Matric certificate", meta:"Verified · DHET" },
+      { name:"POPIA consent form", meta:"Consent on record" }
+    ]
+  },
+  host: {
+    name:"BMW Group Plant Rosslyn", placed:38, mentors:6, approval:"Workplace approved · Valid to 2027",
+    hoursDone:1214, hoursTotal:1800,
+    logbook:[
+      { range:"05 – 09 Aug 2026", task:"Engine assembly line — torque procedures", hours:38, self:"Competent", signoff:{state:"signed", by:"J. van der Merwe"} },
+      { range:"29 Jul – 02 Aug 2026", task:"Brake system diagnostics & bleeding", hours:40, self:"Competent", signoff:{state:"signed", by:"J. van der Merwe"} },
+      { range:"22 – 26 Jul 2026", task:"Suspension geometry & wheel alignment", hours:36, self:"Developing", signoff:{state:"signed", by:"J. van der Merwe"} },
+      { range:"12 – 16 Aug 2026", task:"Transmission fluid service & inspection", hours:39, self:"Competent", signoff:{state:"awaiting"} }
+    ]
+  },
+  funder: {
+    name:"merSETA Discretionary Grant 2025/26", committed:24000000, disbursed:18400000,
+    disbursements:[
+      { month:"May 2026", cohort:"Cohort 2025", learners:284, amount:1192800, status:"completed" },
+      { month:"Jun 2026", cohort:"Cohort 2025", learners:284, amount:1192800, status:"completed" },
+      { month:"Jul 2026", cohort:"Cohort 2025", learners:286, amount:1201200, status:"completed" },
+      { month:"Aug 2026", cohort:"Cohort 2025", learners:283, amount:1188600, status:"pending" },
+      { month:"Aug 2026", cohort:"Anomaly hold", learners:3, amount:12600, status:"suspended" }
+    ]
+  },
+  certification: {
+    queue:[
+      { serial:"TTA-2026-004417", learner:"Naledi Khumalo", programme:"Automotive Motor Mechanic (NQF 5)", chain:"Assessor → Moderator → QCTO", status:"pending" },
+      { serial:"TTA-2026-004418", learner:"Karabo Nel",     programme:"Mechatronics Technician (NQF 6)",  chain:"Assessor → Moderator → QCTO", status:"enrolled" },
+      { serial:"TTA-2026-004419", learner:"Dineo Phiri",    programme:"Automotive Motor Mechanic (NQF 5)", chain:"Assessor → Moderator → QCTO", status:"completed" }
+    ],
+    sample:{ serial:"TTA-2026-004417", learner:"Naledi Khumalo", programme:"Occupational Certificate: Automotive Motor Mechanic (NQF 5)", issue:"17 Aug 2026" }
+  },
+  reports: [
+    { name:"QCTO Quarterly Return", last:"14 Aug 2026", period:"Q2 2026/27" },
+    { name:"SETA (merSETA) Progress Report", last:"08 Aug 2026", period:"Q1 2026/27" },
+    { name:"FMPPI Performance Indicators", last:"31 Jul 2026", period:"2025/26" },
+    { name:"PFMA Expenditure Report", last:"15 Aug 2026", period:"Aug 2026" },
+    { name:"POPIA Register", last:"01 Aug 2026", period:"Live" },
+    { name:"Attendance Registers (non-accredited)", last:"16 Aug 2026", period:"Aug 2026" }
+  ],
+  fmppi: [
+    { i:"Learner enrolment target", met:true }, { i:"Placement rate ≥ 80%", met:true },
+    { i:"Certification throughput", met:true }, { i:"Stipend disbursement accuracy", met:true },
+    { i:"POPIA compliance audits", met:true }, { i:"Facilitator:learner ratio", met:true },
+    { i:"Workplace approval currency", met:true }, { i:"Assessment turnaround time", met:true },
+    { i:"Grant utilisation ≥ 75%", met:true }, { i:"Anomaly resolution SLA", met:true },
+    { i:"Attendance capture rate", met:true }, { i:"RPL processing time", met:false, remark:"RPL backlog: 6 files exceed 30-day target. Corrective action logged." }
+  ],
+  modules: {
+    "records":{ name:"Learner Academic Records", purpose:"A single, POPIA-compliant record of every learner's academic history — qualifications, credits, assessments, and RPL — cross-linked to enrolment and certification.", chips:["Credit transcripts","RPL ledger","QCTO alignment"] },
+    "programmes":{ name:"Learning Programmes", purpose:"Accredited occupational qualifications with curriculum structure, NQF levels, and credit weighting mapped to QCTO and SETA scopes.", chips:["Curriculum map","NQF levels","Scope of accreditation"] },
+    "vle":{ name:"Virtual Learning Environment", purpose:"SA-hosted online delivery for theory components — content, assessments, and attendance captured against each learner record.", chips:["Content library","Online assessment","Attendance capture"] },
+    "staff":{ name:"Teaching & Assessment Staff", purpose:"Register of facilitators, assessors, and moderators with constituent registration status and facilitator:learner ratios.", chips:["Assessor registry","Moderation","Ratio monitoring"] },
+    "centres":{ name:"Assessment Centres", purpose:"Accredited assessment and trade-test venues with capacity, equipment schedules, and NAMB scheduling.", chips:["Venue capacity","Equipment schedule","NAMB scheduling"] },
+    "accreditation":{ name:"TASEZ Accreditation", purpose:"Central register of accreditation instruments, validity periods, and scope — with expiry alerting for QCTO and SETA.", chips:["Instrument register","Validity tracking","Scope of offering"] },
+    "providers":{ name:"Training Providers", purpose:"Approved external training providers, contracts, and delivery performance against accredited scope.", chips:["Provider contracts","Performance","Scope verification"] },
+    "nonaccredited":{ name:"Non-Accredited Programmes", purpose:"Short courses and skills programmes with attendance registers and completion records for FMPPI reporting.", chips:["Short courses","Attendance registers","Completion records"] }
+  }
+});
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const state = {
+  screen: "dashboard",
+  railCollapsed: false,
+  anomaliesActioned: {},
+  logSignedOff: {},
+  learnerSearch: "",
+  learnerFilter: "all",
+  countUpDone: false
+};
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const prefersReduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const rand = (n) => "R " + Math.round(n).toLocaleString("en-ZA");
+function statusBadge(status){
+  const labels = { applied:"Applied", enrolled:"Enrolled", placed:"Placed", completed:"Completed", certified:"Certified",
+    pending:"Pending", flagged:"Flagged — deceased", suspended:"Suspended" };
+  return `<span class="badge badge-${status}">${labels[status]||status}</span>`;
+}
+
+const RAIL_GROUPS = [
+  { group:"Core", items:[
+    { id:"dashboard", label:"Dashboard", icon:"grid" },
+    { id:"learners", label:"Learners", icon:"users" },
+    { id:"records", label:"Learner Academic Records", icon:"file" }
+  ]},
+  { group:"Delivery", items:[
+    { id:"programmes", label:"Learning Programmes", icon:"book" },
+    { id:"vle", label:"Virtual Learning Environment", icon:"monitor" },
+    { id:"staff", label:"Teaching & Assessment Staff", icon:"badge" }
+  ]},
+  { group:"Quality", items:[
+    { id:"centres", label:"Assessment Centres", icon:"pin" },
+    { id:"accreditation", label:"TASEZ Accreditation", icon:"shield" },
+    { id:"providers", label:"Training Providers", icon:"building" },
+    { id:"certification", label:"Certification", icon:"award" }
+  ]},
+  { group:"Partnerships & Funding", items:[
+    { id:"hosts", label:"Host Companies", icon:"factory" },
+    { id:"sponsors", label:"Sponsors & Funders", icon:"wallet" },
+    { id:"nonaccredited", label:"Non-Accredited Programmes", icon:"layers" }
+  ]},
+  { group:"Governance", items:[
+    { id:"reports", label:"Reports & Compliance", icon:"clipboard" }
+  ]}
+];
+
+const ICONS = {
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+  book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  monitor:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  badge:'<path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/>',
+  pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+  shield:'<path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/>',
+  building:'<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01M10 21v-4h4v4"/>',
+  award:'<circle cx="12" cy="8" r="6"/><path d="M8.5 13 7 22l5-3 5 3-1.5-9"/>',
+  factory:'<path d="M2 20h20"/><path d="M4 20V9l6 4V9l6 4V9l4 3v8"/>',
+  wallet:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/>',
+  layers:'<path d="m12 2 9 5-9 5-9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>',
+  clipboard:'<rect x="8" y="3" width="8" height="4" rx="1"/><path d="M8 5H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><path d="M9 12h6M9 16h4"/>'
+};
+function icon(name, size=20){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]||""}</svg>`;
+}
+
+/* =========================================================
+   RAIL RENDER
+   ========================================================= */
+function renderRail(){
+  const nav = $("#railNav");
+  nav.innerHTML = RAIL_GROUPS.map(g => `
+    <div class="flex flex-col gap-1">
+      <span data-railfull class="type-micro font-semibold uppercase tracking-wider px-2 mb-0.5" style="color: var(--rail-ink-3); font-size:0.65rem;">${esc(g.group)}</span>
+      ${g.items.map(it => `
+        <button class="rail-item" data-nav="${it.id}" aria-current="${state.screen===it.id}" title="${esc(it.label)}">
+          ${icon(it.icon)}
+          <span data-railfull class="truncate">${esc(it.label)}</span>
+        </button>`).join("")}
+    </div>`).join("");
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+function showScreen(id){
+  state.screen = id;
+  renderRail();
+  const el = $("#screen");
+  el.innerHTML = (SCREENS[id] || SCREENS.__preview)(id);
+  el.scrollTop = 0;
+  document.querySelector("#shellMain").scrollTo?.(0,0);
+  if(!prefersReduced()){ el.classList.remove("anim-fade-up"); void el.offsetWidth; el.classList.add("anim-fade-up"); }
+  // close mobile drawer
+  closeRail();
+  // screen-specific wiring
+  if(id==="dashboard") wireDashboard();
+  if(id==="certification") { /* wired by delegation */ }
+}
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
+const SCREENS = {};
+
+/* ---- Dashboard ---- */
+SCREENS.dashboard = () => {
+  const statCards = DATA.stats.map(s => `
+    <div class="stat anim-fade-up">
+      <div class="type-micro text-ink-3 mb-1">${esc(s.label)}</div>
+      <div class="stat-fig text-ink-1 text-[1.7rem]" data-count="${s.value}" data-decimals="${s.decimals||0}" data-prefix="${s.prefix}" data-suffix="${s.suffix}">${s.prefix}0${s.suffix}</div>
+    </div>`).join("");
+
+  const compStrip = DATA.compliance.map(c => `
+    <div class="card p-3.5">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="w-2 h-2 rounded-full" style="background: var(--st-${c.status}-dot);"></span>
+        <span class="type-micro text-ink-3">${esc(c.label)}</span>
+      </div>
+      <div class="type-data font-semibold text-ink-1">${esc(c.value)}</div>
+    </div>`).join("");
+
+  return `
+  <div class="flex flex-col gap-6">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Executive Dashboard</h1>
+      <p class="type-body text-ink-3">TASEZ Training Academy · Learner Management System · Maria Malebo</p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">${statCards}</div>
+
+    <div id="anomalyPanel">${renderAnomalyPanel()}</div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <div class="card p-5 xl:col-span-2">
+        <div class="flex items-start justify-between gap-3 mb-4 flex-wrap">
+          <div>
+            <h2 class="type-h text-ink-1">Embedded cost analytics · PFMA</h2>
+            <p class="type-micro text-ink-3">${esc(DATA.costCohort.title)} · rand, tabular</p>
+          </div>
+          ${renderCostLegend()}
+        </div>
+        ${renderCostChart()}
+      </div>
+      <div class="flex flex-col gap-3">
+        <h2 class="type-h text-ink-1">Statutory compliance</h2>
+        <div class="grid grid-cols-2 gap-3">${compStrip}</div>
+        <div class="card p-4 mt-auto">
+          <div class="type-micro text-ink-3 mb-1">Verification engine</div>
+          <div class="type-data text-ink-2">Home Affairs ID verification runs daily at 06:00 SAST across all active learner IDs. POPIA-compliant, SA-hosted.</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+function renderAnomalyPanel(){
+  const done = DATA.anomalies.every(a => state.anomaliesActioned[a.id]);
+  if(done){
+    return `
+    <div class="card p-5" style="border-color: var(--st-completed-dot); background: var(--st-completed-bg);">
+      <div class="flex items-start gap-3">
+        <span class="timeline-node done relative"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+        <div>
+          <h2 class="type-h" style="color: var(--st-completed-fg);">0 unresolved anomalies</h2>
+          <p class="type-body" style="color: var(--st-completed-fg);">All flagged records actioned. Estimated wasteful expenditure prevented this quarter: <span class="num font-bold">${rand(DATA.wastagePrevented)}</span>.</p>
+        </div>
+      </div>
+    </div>`;
+  }
+  const rows = DATA.anomalies.map(a => {
+    const acted = state.anomaliesActioned[a.id];
+    return `
+    <div class="rounded-[10px] p-3 flex items-center gap-3 flex-wrap transition-all duration-200" style="background: var(--surface-2); border:1px solid var(--line);">
+      <div class="min-w-[140px] flex-1">
+        <div class="type-data font-semibold text-ink-1">${esc(a.name)}</div>
+        <div class="type-micro text-ink-3 num">${esc(a.idmask)}</div>
+      </div>
+      <div class="type-micro text-ink-2 min-w-[160px] flex-1">${esc(a.programme)}</div>
+      <div class="type-data num font-semibold text-ink-1 min-w-[80px]">${rand(a.stipend)}<span class="type-micro text-ink-3">/mo</span></div>
+      <div class="min-w-[150px]">${statusBadge(acted?"suspended":"flagged")}</div>
+      <div class="ml-auto">
+        ${acted
+          ? `<span class="type-micro text-ink-3 num">${esc(acted)}</span>`
+          : `<button class="btn-primary !py-1.5 !px-3 text-[0.8rem]" data-suspend="${a.id}">Suspend stipend</button>`}
+      </div>
+    </div>`;
+  }).join("");
+
+  return `
+  <div class="card p-5" style="border-color: var(--st-flagged-dot);">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="relative mt-1 w-2.5 h-2.5 rounded-full flex-none dot-pulse" style="background: var(--brand-red);"></span>
+      <div>
+        <h2 class="type-h text-ink-1">Anomaly detection · Home Affairs ID verification</h2>
+        <p class="type-micro text-ink-3">Last verification run: today 06:00 · 1,247 IDs checked · <span style="color: var(--st-flagged-fg); font-weight:600;">3 flagged — deceased status returned</span></p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">${rows}</div>
+  </div>`;
+}
+
+function renderCostLegend(){
+  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-4","--viz-muted"];
+  return `<div class="flex flex-wrap gap-x-3 gap-y-1">${DATA.costCohort.order.map((k,i)=>`
+    <span class="flex items-center gap-1.5 type-micro text-ink-2"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(${ramp[i]});"></span>${esc(k)}</span>`).join("")}</div>`;
+}
+
+function renderCostChart(){
+  const c = DATA.costCohort;
+  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-4","--viz-muted"];
+  const W=640, H=280, padL=54, padB=32, padT=10, padR=10;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const totals = c.cohorts.map(co => c.order.reduce((s,k)=>s+co.seg[k],0));
+  const maxV = Math.max(...totals)*1.05;
+  const bw = plotW/c.cohorts.length*0.52;
+  const gy = 5;
+  let grid="";
+  for(let i=0;i<=gy;i++){
+    const val = maxV/gy*i;
+    const y = padT+plotH-(val/maxV)*plotH;
+    grid += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="var(--viz-grid)" stroke-width="1"/>`;
+    grid += `<text x="${padL-8}" y="${y+3}" text-anchor="end" font-size="9" fill="var(--viz-axis)" font-family="Inter">R ${(val/1000000).toFixed(1)}M</text>`;
+  }
+  let bars="";
+  c.cohorts.forEach((co,ci)=>{
+    const cx = padL + plotW/c.cohorts.length*(ci+0.5);
+    let acc=0;
+    const breakdown = c.order.map(k=>`${k} ${rand(co.seg[k])}`).join(" · ");
+    c.order.forEach((k,ki)=>{
+      const val=co.seg[k];
+      const h=(val/maxV)*plotH;
+      const y=padT+plotH-((acc+val)/maxV)*plotH;
+      acc+=val;
+      const round = ki===c.order.length-1 ? 'rx="3"' : '';
+      bars += `<rect class="cost-bar" x="${cx-bw/2}" y="${y}" width="${bw}" height="${Math.max(h,0.5)}" ${round}
+        fill="var(${ramp[ki]})" data-tip="${esc(co.name)} — ${esc(k)}: ${rand(val)}"><title>${esc(co.name)} · ${esc(breakdown)} · Total ${rand(totals[ci])}</title></rect>`;
+    });
+    bars += `<text x="${cx}" y="${H-padB+18}" text-anchor="middle" font-size="10" fill="var(--viz-axis)" font-family="Inter">${esc(co.name)}</text>`;
+  });
+  return `
+  <div class="w-full overflow-x-auto fi-scroll">
+    <svg viewBox="0 0 ${W} ${H}" class="w-full min-w-[520px]" role="img" aria-label="${esc(c.title)}">
+      ${grid}
+      <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT+plotH}" stroke="var(--viz-axis)" stroke-width="1"/>
+      <line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="var(--viz-axis)" stroke-width="1"/>
+      ${bars}
+    </svg>
+  </div>`;
+}
+
+/* ---- Learners ---- */
+SCREENS.learners = () => {
+  const filters = ["all","placed","enrolled","completed","flagged","suspended","applied"];
+  const chips = filters.map(f => `
+    <button class="type-micro font-semibold px-3 py-1.5 rounded-full transition-colors ${state.learnerFilter===f?'':'text-ink-2'}"
+      style="${state.learnerFilter===f?'background: var(--accent); color: var(--accent-ink);':'background: var(--surface-2); border:1px solid var(--line);'}"
+      data-filter="${f}">${f==="all"?"All":esc(f[0].toUpperCase()+f.slice(1))}</button>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div class="flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="type-display-1 text-ink-1">Learners</h1>
+        <p class="type-body text-ink-3">1,247 active learners across accredited programmes</p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <div class="flex gap-2 flex-wrap">${chips}</div>
+      <div class="relative max-w-[360px]">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="learnerSearch" type="search" value="${esc(state.learnerSearch)}" placeholder="Search by name or ID number…" aria-label="Search learners"
+          class="type-data w-full rounded-[10px] pl-9 pr-3 py-2 bg-surface" style="border:1px solid var(--line);" />
+      </div>
+    </div>
+    <div id="learnerTableWrap" class="card-flush">${renderLearnerTable()}</div>
+  </div>`;
+};
+
+function renderLearnerTable(){
+  const q = state.learnerSearch.trim().toLowerCase();
+  let rows = DATA.learners.filter(l => {
+    const okF = state.learnerFilter==="all" || l.status===state.learnerFilter;
+    const okQ = !q || l.name.toLowerCase().includes(q) || l.idmask.toLowerCase().includes(q);
+    return okF && okQ;
+  });
+  if(rows.length===0){
+    return `<div class="p-10 text-center">
+      <p class="type-body text-ink-1 font-semibold mb-1">No learners match &ldquo;${esc(state.learnerSearch)}&rdquo;.</p>
+      <p class="type-micro text-ink-3">Clear the search to see all 1,247 learners.</p>
+    </div>`;
+  }
+  const body = rows.map(l => `
+    <tr class="cursor-pointer transition-colors hover:bg-surface-2" data-learner="${l.id}" tabindex="0" role="button" aria-label="Open ${esc(l.name)}">
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center type-micro font-bold flex-none" style="background: var(--role-learner-bg); color: var(--role-learner-fg); box-shadow: 0 0 0 1.5px var(--role-learner-ring);">${esc(l.name.split(" ").map(n=>n[0]).join("").slice(0,2))}</span>
+          <span class="type-data font-semibold text-ink-1">${esc(l.name)}</span>
+        </div>
+      </td>
+      <td class="px-4 py-3 type-data num text-ink-2">${esc(l.idmask)}</td>
+      <td class="px-4 py-3 type-data text-ink-2 hidden md:table-cell">${esc(l.programme)}</td>
+      <td class="px-4 py-3 type-data text-ink-2 hidden lg:table-cell">${esc(l.sponsor)}</td>
+      <td class="px-4 py-3 type-data text-ink-2 hidden xl:table-cell">${esc(l.host)}</td>
+      <td class="px-4 py-3">${statusBadge(l.status)}</td>
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-2 min-w-[90px]">
+          <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${l.progress}%; background: var(--viz-4);"></div></div>
+          <span class="type-micro num text-ink-3 w-8 text-right">${l.progress}%</span>
+        </div>
+      </td>
+    </tr>`).join("");
+  return `
+  <div class="overflow-x-auto fi-scroll">
+    <table class="w-full text-left border-collapse min-w-[560px]">
+      <thead>
+        <tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Learner</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">SA ID</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 hidden md:table-cell">Programme</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 hidden lg:table-cell">Sponsor</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 hidden xl:table-cell">Host company</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Status</th>
+          <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Progress</th>
+        </tr>
+      </thead>
+      <tbody style="divide-y:1px solid var(--line);">${body}</tbody>
+    </table>
+  </div>`;
+}
+
+SCREENS.learnerDetail = () => {
+  const d = DATA.learnerDetail;
+  const tl = d.timeline.map((t,i)=>`
+    <div class="flex gap-3 ${i===d.timeline.length-1?'':'pb-5'} relative">
+      ${i<d.timeline.length-1?`<span class="absolute left-3 top-6 bottom-0 w-px" style="background: var(--line-2);"></span>`:''}
+      <span class="timeline-node ${t.state} relative z-10">
+        ${t.state==='done'?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>':t.state==='current'?'<span class="w-2 h-2 rounded-full" style="background: var(--accent);"></span>':'<span class="w-2 h-2 rounded-full" style="background: var(--line-strong);"></span>'}
+      </span>
+      <div class="pt-0.5">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="type-data font-semibold text-ink-1">${esc(t.title)}</span>
+          ${t.gold?`<span class="badge badge-certified">RPL</span>`:''}
+        </div>
+        <div class="type-micro text-ink-3 num">${esc(t.date)}</div>
+        <div class="type-micro text-ink-2 mt-0.5">${esc(t.note)}</div>
+      </div>
+    </div>`).join("");
+
+  const stip = d.stipends.map(s=>`
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="py-2 type-micro text-ink-2">${esc(s.month)}</td>
+      <td class="py-2 type-micro num text-ink-1 text-right">${rand(s.amount)}</td>
+      <td class="py-2 text-right">${statusBadge(s.status)}</td>
+    </tr>`).join("");
+
+  const docs = d.documents.map(doc=>`
+    <div class="flex items-center gap-2.5 py-2" style="border-bottom:1px solid var(--line-2);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      <div class="flex-1">
+        <div class="type-micro font-semibold text-ink-1">${esc(doc.name)}</div>
+        <div class="type-micro text-ink-3">${esc(doc.meta)}</div>
+      </div>
+      ${doc.name.includes("POPIA")?`<span class="badge badge-completed">POPIA: consent on record</span>`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--st-completed-dot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>`}
+    </div>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <button class="btn-ghost w-fit !py-1.5" data-nav="learners"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>Back to learners</button>
+    <div class="card p-5">
+      <div class="flex items-center gap-4 flex-wrap">
+        <span class="w-14 h-14 rounded-full flex items-center justify-center text-[1.1rem] font-bold" style="background: var(--role-learner-bg); color: var(--role-learner-fg); box-shadow: 0 0 0 2px var(--role-learner-ring);">TN</span>
+        <div>
+          <h1 class="type-display-2 text-ink-1">${esc(d.name)}</h1>
+          <p class="type-micro text-ink-3 num">SA ID ${esc(d.idmask)} · ${esc(d.programme)}</p>
+        </div>
+        <div class="ml-auto">${statusBadge("placed")}</div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="card p-5 lg:col-span-2">
+        <h2 class="type-h text-ink-1 mb-4">Learner lifecycle</h2>
+        ${tl}
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="card p-5">
+          <h2 class="type-h text-ink-1 mb-1">Sponsor</h2>
+          <p class="type-data text-ink-2 mb-3">${esc(d.sponsor)}</p>
+          <h3 class="type-micro font-semibold text-ink-3 mb-1">Stipend history</h3>
+          <table class="w-full"><tbody>${stip}</tbody></table>
+        </div>
+        <div class="card p-5">
+          <h2 class="type-h text-ink-1 mb-2">Documents</h2>
+          ${docs}
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Host Companies ---- */
+SCREENS.hosts = () => {
+  const h = DATA.host;
+  const pct = Math.round(h.hoursDone/h.hoursTotal*100);
+  const rows = h.logbook.map((e,i)=>{
+    const signed = e.signoff.state==="signed" || state.logSignedOff[i];
+    const by = e.signoff.by || "J. van der Merwe";
+    return `
+    <div class="rounded-[10px] p-3.5" style="background: var(--surface-2); border:1px solid var(--line);">
+      <div class="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <div class="type-micro text-ink-3 num">${esc(e.range)} · ${e.hours} hours</div>
+          <div class="type-data font-semibold text-ink-1">${esc(e.task)}</div>
+          <div class="type-micro text-ink-2 mt-0.5">Self-assessment: ${esc(e.self)}</div>
+        </div>
+        <div class="ml-auto">
+          ${signed
+            ? `<span class="badge badge-completed">Signed — ${esc(by)}</span>`
+            : `<div class="flex items-center gap-2"><span class="badge badge-pending">Awaiting mentor</span><button class="btn-primary !py-1.5 !px-3 text-[0.8rem]" data-signoff="${i}">Sign off</button></div>`}
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Host Companies</h1>
+      <p class="type-body text-ink-3">Workplace-based learning · digital logbook</p>
+    </div>
+    <div class="card p-5">
+      <div class="flex items-start gap-4 flex-wrap">
+        <div class="w-12 h-12 rounded-[10px] flex items-center justify-center flex-none" style="background: var(--surface-3); color: var(--ink-2);">${icon("factory",24)}</div>
+        <div class="flex-1 min-w-[180px]">
+          <h2 class="type-h text-ink-1">${esc(h.name)}</h2>
+          <p class="type-micro text-ink-3">${h.placed} placed learners · ${h.mentors} mentors</p>
+        </div>
+        <span class="badge badge-completed self-center">${esc(h.approval)}</span>
+      </div>
+      <div class="mt-4 pt-4" style="border-top:1px solid var(--line);">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="type-micro font-semibold text-ink-2">Workplace hours (T. Nkosi)</span>
+          <span class="type-data num font-semibold text-ink-1">${h.hoursDone.toLocaleString("en-ZA")} / ${h.hoursTotal.toLocaleString("en-ZA")}</span>
+        </div>
+        <div class="h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${pct}%; background: linear-gradient(90deg, var(--viz-1), var(--viz-4));"></div></div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <h2 class="type-h text-ink-1 mb-3">Digital logbook · weekly entries</h2>
+      <div class="flex flex-col gap-2.5">${rows}</div>
+    </div>
+  </div>`;
+};
+
+/* ---- Sponsors ---- */
+SCREENS.sponsors = () => {
+  const f = DATA.funder;
+  const util = Math.round(f.disbursed/f.committed*100);
+  const rows = f.disbursements.map(d=>`
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-2.5 type-data text-ink-2">${esc(d.month)}</td>
+      <td class="px-4 py-2.5 type-data text-ink-2">${esc(d.cohort)}</td>
+      <td class="px-4 py-2.5 type-data num text-ink-2 text-right">${d.learners.toLocaleString("en-ZA")}</td>
+      <td class="px-4 py-2.5 type-data num font-semibold text-ink-1 text-right">${rand(d.amount)}</td>
+      <td class="px-4 py-2.5 text-right">${statusBadge(d.status==="suspended"?"suspended":d.status)}</td>
+    </tr>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div class="flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="type-display-1 text-ink-1">Sponsors &amp; Funders</h1>
+        <p class="type-body text-ink-3">Grant administration · stipend disbursement</p>
+      </div>
+      <button class="btn-primary" data-report="funder">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 18h4"/></svg>
+        Generate funder report
+      </button>
+    </div>
+    <div class="card p-5">
+      <h2 class="type-h text-ink-1">${esc(f.name)}</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+        <div><div class="type-micro text-ink-3">Committed</div><div class="stat-fig num text-ink-1 text-[1.3rem]">${rand(f.committed)}</div></div>
+        <div><div class="type-micro text-ink-3">Disbursed</div><div class="stat-fig num text-ink-1 text-[1.3rem]">${rand(f.disbursed)}</div></div>
+        <div><div class="type-micro text-ink-3">Utilisation</div><div class="stat-fig num text-ink-1 text-[1.3rem]">${util}%</div></div>
+      </div>
+      <div class="mt-4 h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${util}%; background: linear-gradient(90deg, var(--viz-1), var(--viz-4));"></div></div>
+    </div>
+    <div class="card-flush">
+      <div class="p-4"><h2 class="type-h text-ink-1">Stipend disbursement</h2></div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[520px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Month</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Cohort</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Learners paid</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Amount</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Status</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Certification ---- */
+SCREENS.certification = () => {
+  const q = DATA.certification.queue.map(c=>`
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data num font-semibold text-ink-1">${esc(c.serial)}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(c.learner)}</td>
+      <td class="px-4 py-3 type-data text-ink-2 hidden md:table-cell">${esc(c.programme)}</td>
+      <td class="px-4 py-3 type-micro text-ink-3 hidden lg:table-cell">${esc(c.chain)}</td>
+      <td class="px-4 py-3">${statusBadge(c.status)}</td>
+      <td class="px-4 py-3 text-right"><button class="btn-ghost !py-1.5 !px-3 text-[0.8rem]" data-cert="preview">Preview certificate</button></td>
+    </tr>`).join("");
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Certification</h1>
+      <p class="type-body text-ink-3">Approval queue · QCTO-aligned certificate issuance</p>
+    </div>
+    <div class="card-flush">
+      <div class="p-4"><h2 class="type-h text-ink-1">Approval queue</h2></div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[560px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Serial</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Learner</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 hidden md:table-cell">Programme</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 hidden lg:table-cell">Approver chain</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Status</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Action</th>
+          </tr></thead>
+          <tbody>${q}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Reports ---- */
+SCREENS.reports = () => {
+  const cards = DATA.reports.map(r=>`
+    <div class="card p-5 flex flex-col gap-3">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-[10px] flex items-center justify-center flex-none" style="background: var(--surface-3); color: var(--ink-2);">${icon("clipboard",20)}</div>
+        <div>
+          <h3 class="type-data font-semibold text-ink-1">${esc(r.name)}</h3>
+          <p class="type-micro text-ink-3 num">Last generated ${esc(r.last)} · ${esc(r.period)}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 mt-auto">
+        <select aria-label="Reporting period for ${esc(r.name)}" class="type-micro rounded-[8px] px-2 py-1.5 bg-surface-2" style="border:1px solid var(--line); color: var(--ink-2);">
+          <option>${esc(r.period)}</option><option>Previous period</option>
+        </select>
+        <button class="btn-ghost !py-1.5 !px-3 text-[0.8rem]" data-report="funder">Generate</button>
+        <button class="btn-ghost !py-1.5 !px-3 text-[0.8rem]" data-report="funder">Print</button>
+      </div>
+    </div>`).join("");
+
+  const fmppi = DATA.fmppi.map(f=>`
+    <div class="flex items-start gap-2.5 py-2" style="border-bottom:1px solid var(--line-2);">
+      <span class="w-2.5 h-2.5 rounded-full mt-1.5 flex-none" style="background: var(${f.met?'--st-completed-dot':'--st-pending-dot'});"></span>
+      <div class="flex-1">
+        <span class="type-data text-ink-1">${esc(f.i)}</span>
+        ${f.remark?`<div class="type-micro text-ink-3 mt-0.5">${esc(f.remark)}</div>`:''}
+      </div>
+      <span class="badge ${f.met?'badge-completed':'badge-pending'}">${f.met?'Met':'Unmet'}</span>
+    </div>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Reports &amp; Compliance</h1>
+      <p class="type-body text-ink-3">Statutory reporting · QCTO · SETA · FMPPI · PFMA · POPIA</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">${cards}</div>
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <h2 class="type-h text-ink-1">FMPPI Performance Indicators · 2025/26</h2>
+        <span class="badge badge-pending">11 / 12 met</span>
+      </div>
+      <div>${fmppi}</div>
+    </div>
+  </div>`;
+};
+
+/* ---- Generic module preview ---- */
+SCREENS.__preview = (id) => {
+  const m = DATA.modules[id] || { name:"Module", purpose:"In full build.", chips:[] };
+  const chips = m.chips.map(c=>`<span class="badge badge-applied">${esc(c)}</span>`).join("");
+  const skel = `
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
+      <div class="card p-5 lg:col-span-2 flex flex-col gap-3">
+        <div class="fi-skeleton h-4 w-1/3"></div>
+        ${Array(5).fill(0).map(()=>`<div class="flex gap-3 items-center"><div class="fi-skeleton h-8 w-8 rounded-full"></div><div class="fi-skeleton h-3 flex-1"></div><div class="fi-skeleton h-3 w-16"></div></div>`).join("")}
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="card p-5 flex flex-col gap-3"><div class="fi-skeleton h-4 w-1/2"></div><div class="fi-skeleton h-20 w-full"></div></div>
+        <div class="card p-5 flex flex-col gap-2"><div class="fi-skeleton h-3 w-3/4"></div><div class="fi-skeleton h-3 w-2/3"></div><div class="fi-skeleton h-3 w-1/2"></div></div>
+      </div>
+    </div>`;
+  return `
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-2 flex-wrap">
+      <h1 class="type-display-1 text-ink-1">${esc(m.name)}</h1>
+      <span class="badge badge-enrolled">In full build</span>
+    </div>
+    <p class="type-body text-ink-2 max-w-[720px]">${esc(m.purpose)}</p>
+    <div class="flex gap-2 flex-wrap mt-2">${chips}</div>
+    ${skel}
+  </div>`;
+};
+
+/* =========================================================
+   FUNDER REPORT (print) + CERTIFICATE modals
+   ========================================================= */
+function openFunderReport(){
+  const f = DATA.funder;
+  const util = Math.round(f.disbursed/f.committed*100);
+  const rows = f.disbursements.map(d=>`
+    <tr style="border-bottom:1px solid var(--line);">
+      <td class="py-1.5 type-data text-ink-2">${esc(d.month)}</td>
+      <td class="py-1.5 type-data text-ink-2">${esc(d.cohort)}</td>
+      <td class="py-1.5 type-data num text-ink-1 text-right">${d.learners.toLocaleString("en-ZA")}</td>
+      <td class="py-1.5 type-data num text-ink-1 text-right">${rand(d.amount)}</td>
+    </tr>`).join("");
+  const html = `
+  <div class="card p-8 print-region" style="background: var(--surface);">
+    <div class="no-print flex justify-end gap-2 mb-4">
+      <button class="btn-ghost !py-1.5" onclick="window.print()">Print</button>
+      <button class="btn-ghost !py-1.5" data-modal-close>Close</button>
+    </div>
+    <div class="flex items-center gap-3 pb-4 mb-5" style="border-bottom:2px solid var(--brand-red);">
+      <span class="inline-block w-4 h-4 rounded-[3px]" style="background: var(--brand-gold);"></span>
+      <span class="font-display font-extrabold text-[1.4rem] text-ink-1">TASEZ</span>
+      <span class="type-micro text-ink-3">Training Academy · Funder Report</span>
+      <span class="ml-auto type-micro text-ink-3 num">Issued 17 Aug 2026 · SAST</span>
+    </div>
+    <h1 class="type-display-2 text-ink-1 mb-1">${esc(f.name)}</h1>
+    <p class="type-micro text-ink-3 mb-5">Prepared for merSETA · Reporting period Q1 2026/27 · PFMA &amp; FMPPI aligned</p>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="card p-3"><div class="type-micro text-ink-3">Committed</div><div class="stat-fig num text-ink-1 text-[1.1rem]">${rand(f.committed)}</div></div>
+      <div class="card p-3"><div class="type-micro text-ink-3">Disbursed</div><div class="stat-fig num text-ink-1 text-[1.1rem]">${rand(f.disbursed)}</div></div>
+      <div class="card p-3"><div class="type-micro text-ink-3">Utilisation</div><div class="stat-fig num text-ink-1 text-[1.1rem]">${util}%</div></div>
+    </div>
+    <h2 class="type-h text-ink-1 mb-2">Learner progress summary</h2>
+    <p class="type-data text-ink-2 mb-5">1,247 active learners · 312 placed at host companies · 96% compliance score · 3 anomalies detected and actioned; estimated wasteful expenditure prevented ${rand(DATA.wastagePrevented)} this quarter.</p>
+    <h2 class="type-h text-ink-1 mb-2">Disbursement schedule</h2>
+    <table class="w-full mb-8"><thead><tr style="border-bottom:1px solid var(--line-strong);">
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Month</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Cohort</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Learners</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Amount</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="grid grid-cols-2 gap-8 pt-8">
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">M. Malebo · Executive, TASEZ Training Academy</div></div>
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">Accounting Officer · Date</div></div>
+    </div>
+  </div>`;
+  openModal(html);
+}
+
+function openCertificate(){
+  const c = DATA.certification.sample;
+  const html = `
+  <div class="card p-6 sm:p-8 print-region" style="background: var(--surface);">
+    <div class="no-print flex justify-end gap-2 mb-4">
+      <button class="btn-ghost !py-1.5" onclick="window.print()">Print</button>
+      <button class="btn-ghost !py-1.5" data-modal-close>Close</button>
+    </div>
+    <div class="p-6 sm:p-10 text-center" style="border:2px solid var(--brand-charcoal); border-radius: 8px; position:relative;">
+      <div class="absolute inset-2 pointer-events-none" style="border:1px solid var(--brand-gold); border-radius:6px;"></div>
+      <div class="relative">
+        <div class="flex items-center justify-center gap-2 mb-6">
+          <span class="inline-block w-3.5 h-3.5 rounded-[3px]" style="background: var(--brand-gold);"></span>
+          <span class="font-display font-extrabold text-[1.2rem] text-ink-1">TASEZ Training Academy</span>
+        </div>
+        <p class="type-micro uppercase tracking-[0.25em] text-ink-3 mb-4">Certificate of Competence</p>
+        <p class="type-body text-ink-3 mb-1">This certifies that</p>
+        <h1 class="font-display font-extrabold text-[2rem] text-ink-1 mb-3">${esc(c.learner)}</h1>
+        <p class="type-body text-ink-2 mb-6 max-w-[440px] mx-auto">has successfully completed the<br><span class="font-semibold text-ink-1">${esc(c.programme)}</span></p>
+        <div class="flex items-center justify-center mb-6">
+          <svg width="96" height="96" viewBox="0 0 100 100" aria-label="Certification seal">
+            <circle id="sealRing" cx="50" cy="50" r="42" fill="none" stroke="var(--brand-gold)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="34" fill="none" stroke="var(--brand-gold)" stroke-width="1" opacity="0.5"/>
+            <path d="M38 50l8 8 16-18" fill="none" stroke="var(--brand-gold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="50" y="82" text-anchor="middle" font-size="7" fill="var(--brand-gold)" font-family="Archivo" font-weight="700" letter-spacing="1">QCTO ALIGNED</text>
+          </svg>
+        </div>
+        <p class="type-micro text-ink-3 mb-6">Serial <span id="certSerial" class="num font-semibold text-ink-1">${esc(c.serial)}</span> · Issued <span class="num">${esc(c.issue)}</span></p>
+        <div class="grid grid-cols-2 gap-8 max-w-[420px] mx-auto pt-4">
+          <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">Academy Director</div></div>
+          <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">QCTO Representative</div></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  openModal(html);
+  // orchestrated seal draw + serial tick
+  requestAnimationFrame(()=>{
+    const ring = $("#sealRing");
+    const serialEl = $("#certSerial");
+    if(!ring) return;
+    const len = 2*Math.PI*42;
+    if(prefersReduced()){
+      ring.style.strokeDasharray = "";
+      serialEl.textContent = c.serial;
+      return;
+    }
+    ring.style.strokeDasharray = len;
+    ring.style.strokeDashoffset = len;
+    ring.style.transition = "stroke-dashoffset 900ms ease-out";
+    requestAnimationFrame(()=>{ ring.style.strokeDashoffset = "0"; });
+    // serial character tick
+    const full = c.serial;
+    serialEl.textContent = "";
+    let i=0;
+    const tick = setInterval(()=>{
+      serialEl.textContent = full.slice(0,++i);
+      if(i>=full.length) clearInterval(tick);
+    }, 55);
+  });
+}
+
+/* =========================================================
+   MODAL / DRAWER
+   ========================================================= */
+function openModal(html){
+  $("#modalBody").innerHTML = html;
+  $("#modal").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){ $("#modal").classList.add("hidden"); $("#modalBody").innerHTML=""; document.body.style.overflow=""; }
+
+function openDrawer(){
+  const done = DATA.anomalies.every(a=>state.anomaliesActioned[a.id]);
+  const items = done
+    ? `<div class="card p-4"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background: var(--st-completed-dot);"></span><span class="type-data font-semibold text-ink-1">All anomalies resolved</span></div><p class="type-micro text-ink-3 mt-1">0 unresolved. ${rand(DATA.wastagePrevented)} wasteful expenditure prevented.</p></div>`
+    : DATA.anomalies.filter(a=>!state.anomaliesActioned[a.id]).map(a=>`
+      <button class="card p-4 text-left w-full" data-nav="dashboard" data-modal-close>
+        <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full dot-pulse relative" style="background: var(--brand-red);"></span><span class="type-data font-semibold text-ink-1">Deceased ID flagged</span></div>
+        <p class="type-micro text-ink-3">${esc(a.name)} · ${esc(a.idmask)} · stipend ${rand(a.stipend)}/mo. Review on the dashboard.</p>
+      </button>`).join("");
+  $("#drawerBody").innerHTML = `
+    <div class="type-micro text-ink-3 uppercase tracking-wide mb-1">Anomaly alerts</div>
+    ${items}
+    <div class="card p-4 mt-2"><div class="type-data font-semibold text-ink-1 mb-1">SETA submission</div><p class="type-micro text-ink-3">merSETA Q1 progress report submitted successfully.</p></div>`;
+  $("#drawer").classList.remove("hidden");
+  document.body.style.overflow="hidden";
+}
+function closeDrawer(){ $("#drawer").classList.add("hidden"); document.body.style.overflow=""; }
+
+/* =========================================================
+   RAIL toggle (mobile + collapse)
+   ========================================================= */
+function openRail(){ $("#rail").classList.remove("-translate-x-full"); $("#railBackdrop").classList.remove("hidden"); }
+function closeRail(){ if(window.innerWidth<1024){ $("#rail").classList.add("-translate-x-full"); $("#railBackdrop").classList.add("hidden"); } }
+function toggleCollapse(){
+  state.railCollapsed = !state.railCollapsed;
+  const rail = $("#rail"), main = $("#shellMain");
+  $$("[data-railfull]").forEach(e=>e.classList.toggle("hidden", state.railCollapsed));
+  if(state.railCollapsed){
+    rail.classList.remove("w-[264px]"); rail.classList.add("w-[72px]");
+    main.classList.remove("lg:pl-[264px]"); main.classList.add("lg:pl-[72px]");
+  } else {
+    rail.classList.add("w-[264px]"); rail.classList.remove("w-[72px]");
+    main.classList.add("lg:pl-[264px]"); main.classList.remove("lg:pl-[72px]");
+  }
+}
+
+/* =========================================================
+   THEME
+   ========================================================= */
+function toggleTheme(){
+  const html = document.documentElement;
+  const dark = html.getAttribute("data-theme")==="dark";
+  html.setAttribute("data-theme", dark?"light":"dark");
+  html.classList.toggle("bg-plane", true);
+  $("#iconMoon").classList.toggle("hidden", !dark);
+  $("#iconSun").classList.toggle("hidden", dark);
+}
+
+/* =========================================================
+   COUNT-UP (dashboard, first load only)
+   ========================================================= */
+function runCountUps(){
+  if(prefersReduced()){ state.countUpDone=true; return; }
+  $$("[data-count]").forEach(el=>{
+    const target = parseFloat(el.dataset.count);
+    const dec = parseInt(el.dataset.decimals||"0",10);
+    const pre = el.dataset.prefix||"", suf = el.dataset.suffix||"";
+    const dur = 600, start = performance.now();
+    function frame(now){
+      const t = Math.min((now-start)/dur, 1);
+      const eased = 1-Math.pow(1-t,3);
+      const val = target*eased;
+      el.textContent = pre + (dec>0 ? val.toFixed(dec) : Math.round(val).toLocaleString("en-ZA")) + suf;
+      if(t<1) requestAnimationFrame(frame);
+      else el.textContent = pre + (dec>0 ? target.toFixed(dec) : Math.round(target).toLocaleString("en-ZA")) + suf;
+    }
+    requestAnimationFrame(frame);
+  });
+  state.countUpDone = true;
+}
+function wireDashboard(){
+  if(!state.countUpDone) runCountUps();
+  else $$("[data-count]").forEach(el=>{
+    const target=parseFloat(el.dataset.count), dec=parseInt(el.dataset.decimals||"0",10);
+    el.textContent=(el.dataset.prefix||"")+(dec>0?target.toFixed(dec):Math.round(target).toLocaleString("en-ZA"))+(el.dataset.suffix||"");
+  });
+}
+
+/* =========================================================
+   EVENT DELEGATION
+   ========================================================= */
+document.addEventListener("click", (e)=>{
+  const t = e.target;
+
+  const nav = t.closest("[data-nav]");
+  if(nav){ if(nav.hasAttribute("data-modal-close")) closeModal(); if(t.closest("#drawer")) closeDrawer(); showScreen(nav.dataset.nav); return; }
+
+  const learner = t.closest("[data-learner]");
+  if(learner){ SCREENS.learnerDetail && showScreen("learnerDetail"); return; }
+
+  const filter = t.closest("[data-filter]");
+  if(filter){ state.learnerFilter = filter.dataset.filter; $("#learnerTableWrap").innerHTML = renderLearnerTable(); renderRailNoop(); refreshFilterChips(); return; }
+
+  const suspend = t.closest("[data-suspend]");
+  if(suspend){
+    const id = suspend.dataset.suspend;
+    state.anomaliesActioned[id] = "Suspended by M. Malebo · 17 Aug 2026 10:52 · SAST";
+    $("#anomalyPanel").innerHTML = renderAnomalyPanel();
+    // if all resolved, clear the bell dot
+    if(DATA.anomalies.every(a=>state.anomaliesActioned[a.id])) $("#bellDot").classList.add("hidden");
+    return;
+  }
+
+  const signoff = t.closest("[data-signoff]");
+  if(signoff){ state.logSignedOff[signoff.dataset.signoff]=true; showScreen("hosts"); return; }
+
+  const report = t.closest("[data-report]");
+  if(report){ openFunderReport(); return; }
+
+  const cert = t.closest("[data-cert]");
+  if(cert){ openCertificate(); return; }
+
+  if(t.closest("[data-modal-close]")){ closeModal(); return; }
+
+  if(t.id==="themeToggle" || t.closest("#themeToggle")){ toggleTheme(); return; }
+  if(t.id==="railToggle" || t.closest("#railToggle")){ openRail(); return; }
+  if(t.id==="railCollapse" || t.closest("#railCollapse")){ toggleCollapse(); return; }
+  if(t.id==="bellBtn" || t.closest("#bellBtn")){ openDrawer(); return; }
+  if(t.id==="railBackdrop"){ closeRail(); return; }
+  if(t.id==="drawerBackdrop" || t.id==="drawerClose" || t.closest("#drawerClose")){ closeDrawer(); return; }
+  if(t.id==="modalBackdrop"){ closeModal(); return; }
+});
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape"){ closeModal(); closeDrawer(); closeRail(); }
+  const row = e.target.closest && e.target.closest("[data-learner]");
+  if(row && (e.key==="Enter"||e.key===" ")){ e.preventDefault(); showScreen("learnerDetail"); }
+});
+
+document.addEventListener("input",(e)=>{
+  if(e.target.id==="learnerSearch"){
+    state.learnerSearch = e.target.value;
+    $("#learnerTableWrap").innerHTML = renderLearnerTable();
+    const inp = $("#learnerSearch"); if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  }
+});
+
+function refreshFilterChips(){
+  $$("[data-filter]").forEach(b=>{
+    const active = b.dataset.filter===state.learnerFilter;
+    b.setAttribute("style", active?'background: var(--accent); color: var(--accent-ink);':'background: var(--surface-2); border:1px solid var(--line);');
+    b.classList.toggle("text-ink-2", !active);
+  });
+}
+function renderRailNoop(){}
+
+/* Cost chart tooltip */
+document.addEventListener("mousemove",(e)=>{
+  const bar = e.target.closest && e.target.closest(".cost-bar");
+  let tip = $("#vizTip");
+  if(bar){
+    if(!tip){ tip=document.createElement("div"); tip.id="vizTip"; tip.className="no-print fixed z-[60] pointer-events-none type-micro num rounded-md px-2 py-1"; tip.style.background="var(--brand-charcoal)"; tip.style.color="#fff"; tip.style.boxShadow="var(--shadow-lg)"; document.body.appendChild(tip); }
+    tip.textContent = bar.dataset.tip;
+    tip.style.left = (e.clientX+12)+"px"; tip.style.top=(e.clientY+12)+"px"; tip.style.display="block";
+  } else if(tip){ tip.style.display="none"; }
+});
+
+/* =========================================================
+   LOGIN → SHELL (orchestrated moment #1)
+   ========================================================= */
+$("#loginForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const btn=$("#loginBtn"); btn.disabled=true;
+  $("#loginBtnLabel").textContent="Signing in…";
+  $("#loginSpinner").classList.remove("hidden");
+  const delay = prefersReduced()?0:400;
+  setTimeout(()=>{
+    $("#login").classList.add("hidden");
+    $("#app").classList.remove("hidden");
+    if(!prefersReduced()){ $("#rail").classList.add("anim-rail-in"); $("#screen").classList.add("anim-fade-up"); }
+    renderRail();
+    showScreen("dashboard");
+  }, delay);
+});
+
+/* init rail so it's ready */
+renderRail();
+</script>
+</body>
+</html>
