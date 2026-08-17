@@ -13,10 +13,21 @@
      LAYER 1 — BRAND CONSTANTS (mode-invariant)
      ============================================================ */
   :root {
-    --brand-red: #C8102E;
-    --brand-red-deep: #9E0B22;
-    --brand-gold: #D4A94B;
-    --brand-charcoal: #14161A;
+    /* ── TASEZ brand families ─────────────────────────────── */
+    --brand-blue:       #1D4E9E;   /* PRIMARY interactive */
+    --brand-blue-deep:  #163C7B;   /* hover / pressed */
+    --brand-blue-bright:#3B82F6;   /* dark-mode accent + focus */
+
+    --brand-green:      #1E8E5A;   /* compliance / success */
+    --brand-green-deep: #166B44;
+
+    --brand-gold:       #E8A413;   /* achievement / certification */
+    --brand-gold-deep:  #C4880C;
+
+    --brand-red:        #C8102E;   /* DANGER ONLY */
+    --brand-red-deep:   #9E0B22;
+
+    --brand-charcoal:      #14161A;
     --brand-charcoal-deep: #0D0F12;
   }
 
@@ -34,7 +45,7 @@
     --rail-ink-2: #AEB4BE;
     --rail-ink-3: #6C7480;
     --rail-line: #262A31;
-    --rail-active: rgba(200,16,46,0.16);
+    --rail-active: rgba(59,130,246,0.12);
 
     --ink-1: #14161A;
     --ink-2: #464C56;
@@ -49,14 +60,14 @@
     --shadow-md: 0 4px 12px rgba(16,18,22,0.08), 0 2px 4px rgba(16,18,22,0.05);
     --shadow-lg: 0 12px 32px rgba(16,18,22,0.12), 0 4px 8px rgba(16,18,22,0.06);
     --shadow-xl: 0 24px 60px rgba(16,18,22,0.18);
-    --shadow-accent: 0 8px 24px rgba(200,16,46,0.20);
+    --shadow-accent: 0 8px 24px rgba(29,78,158,0.22);
 
-    --accent: var(--brand-red);
-    --accent-hover: var(--brand-red-deep);
+    --accent: var(--brand-blue);
+    --accent-hover: var(--brand-blue-deep);
     --accent-ink: #FFFFFF;
-    --accent-wash: rgba(200,16,46,0.08);
-    --accent-wash-2: rgba(200,16,46,0.14);
-    --focus-ring: rgba(200,16,46,0.45);
+    --accent-wash: rgba(29,78,158,0.08);
+    --accent-wash-2: rgba(29,78,158,0.14);
+    --focus-ring: rgba(29,78,158,0.35);
 
     --radius: 14px;
     --radius-sm: calc(var(--radius) - 8px);
@@ -67,24 +78,30 @@
     /* status triplets — dot / bg / fg */
     --st-applied-dot: #64748B;   --st-applied-bg: #EEF1F5;   --st-applied-fg: #3F4A5A;
     --st-enrolled-dot: #2563EB;  --st-enrolled-bg: #E8EEFE;  --st-enrolled-fg: #1E45A8;
-    --st-placed-dot: #7C3AED;    --st-placed-bg: #F0EAFE;    --st-placed-fg: #5B21B6;
-    --st-completed-dot: #15803D; --st-completed-bg: #E6F4EA; --st-completed-fg: #14622F;
-    --st-pending-dot: #B45309;   --st-pending-bg: #FBF0DC;   --st-pending-fg: #8A4708;
+    --st-placed-dot: #1D4E9E;    --st-placed-bg: #DCE7F8;    --st-placed-fg: #163C7B;
+    --st-completed-dot: var(--brand-gold); --st-completed-bg: #FBF0D6; --st-completed-fg: #8A6A0E;
+    --st-pending-dot: #D9930B;   --st-pending-bg: #FBF0DC;   --st-pending-fg: #8A5A08;
     --st-flagged-dot: var(--brand-red);    --st-flagged-bg: rgba(200,16,46,0.10);   --st-flagged-fg: #9E0B22;
     --st-suspended-dot: var(--brand-red);  --st-suspended-bg: rgba(200,16,46,0.14); --st-suspended-fg: #7E0A1B;
-    --st-certified-dot: var(--brand-gold); --st-certified-bg: #F7EFDA; --st-certified-fg: #8A6A1E;
+    --st-certified-dot: var(--brand-gold); --st-certified-bg: #FBF0D6; --st-certified-fg: #8A6A0E;
+    /* approved / paid / signed — green */
+    --st-approved-dot: var(--brand-green); --st-approved-bg: #E3F3EA; --st-approved-fg: var(--brand-green-deep);
+    --st-paid-dot: var(--brand-green);     --st-paid-bg: #E3F3EA;     --st-paid-fg: var(--brand-green-deep);
+    --st-signed-dot: var(--brand-green);   --st-signed-bg: #E3F3EA;   --st-signed-fg: var(--brand-green-deep);
 
-    /* role identity — bg / fg / ring */
-    --role-learner-bg: #E8EEFE;     --role-learner-fg: #1E45A8;     --role-learner-ring: #2563EB;
-    --role-facilitator-bg: #E6F4EA; --role-facilitator-fg: #14622F; --role-facilitator-ring: #15803D;
-    --role-sponsor-bg: #F7EFDA;     --role-sponsor-fg: #8A6A1E;     --role-sponsor-ring: var(--brand-gold);
-    --role-admin-bg: rgba(200,16,46,0.10); --role-admin-fg: #9E0B22; --role-admin-ring: var(--brand-red);
+    /* role identity — learner=blue · facilitator=gold · sponsor=green · admin=blue */
+    --role-learner-bg: #DCE7F8;     --role-learner-fg: #163C7B;     --role-learner-ring: var(--brand-blue);
+    --role-facilitator-bg: #FBF0D6; --role-facilitator-fg: #8A6A0E; --role-facilitator-ring: var(--brand-gold);
+    --role-sponsor-bg: #E3F3EA;     --role-sponsor-fg: var(--brand-green-deep); --role-sponsor-ring: var(--brand-green);
+    --role-admin-bg: rgba(29,78,158,0.10); --role-admin-fg: #163C7B; --role-admin-ring: var(--brand-blue);
 
-    /* data-viz ordinal ramp gold -> red */
-    --viz-1: #D4A94B;
-    --viz-2: #D98240;
-    --viz-3: #CF4F35;
-    --viz-4: #C8102E;
+    /* data-viz — TASEZ categorical blue/green/gold; red reserved for variance */
+    --viz-1: #1D4E9E;   /* Training → cobalt blue */
+    --viz-2: #1E8E5A;   /* COIDA → emerald green */
+    --viz-3: #E8A413;   /* UIF → achievement gold */
+    --viz-4: #C8102E;   /* overspend/variance ONLY */
+    --viz-blue-deep: #163C7B;  /* Stipends */
+    --viz-slate: #7C8698;      /* PPE */
     --viz-grid: #E3E6EA;
     --viz-axis: #9AA1AC;
     --viz-muted: #C6CBD2;
@@ -104,7 +121,7 @@
     --rail-ink-2: #9BA2AD;
     --rail-ink-3: #676E79;
     --rail-line: #20242B;
-    --rail-active: rgba(200,16,46,0.24);
+    --rail-active: rgba(59,130,246,0.16);
 
     --ink-1: #F1F3F6;
     --ink-2: #B7BEC9;
@@ -119,33 +136,39 @@
     --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
     --shadow-lg: 0 12px 32px rgba(0,0,0,0.6);
     --shadow-xl: 0 24px 60px rgba(0,0,0,0.7);
-    --shadow-accent: 0 8px 24px rgba(200,16,46,0.35);
+    --shadow-accent: 0 8px 24px rgba(59,130,246,0.32);
 
-    --accent: #E4324B;
-    --accent-hover: #F0435C;
+    --accent: var(--brand-blue-bright);
+    --accent-hover: #5C9BFF;
     --accent-ink: #FFFFFF;
-    --accent-wash: rgba(228,50,75,0.14);
-    --accent-wash-2: rgba(228,50,75,0.22);
-    --focus-ring: rgba(228,50,75,0.55);
+    --accent-wash: rgba(59,130,246,0.16);
+    --accent-wash-2: rgba(59,130,246,0.24);
+    --focus-ring: rgba(59,130,246,0.55);
 
     --st-applied-dot: #8A94A3;   --st-applied-bg: #262B33;   --st-applied-fg: #C2C9D3;
     --st-enrolled-dot: #5B8DEF;  --st-enrolled-bg: #1B2740;  --st-enrolled-fg: #A9C3F5;
-    --st-placed-dot: #A374F0;    --st-placed-bg: #271E3F;    --st-placed-fg: #CBB4F5;
-    --st-completed-dot: #3FB463; --st-completed-bg: #14291C; --st-completed-fg: #9BD9AE;
+    --st-placed-dot: #7FB0FF;    --st-placed-bg: #142138;    --st-placed-fg: #BBD4FA;
+    --st-completed-dot: #EBB63C; --st-completed-bg: #2C2413; --st-completed-fg: #E9C877;
     --st-pending-dot: #E0942E;   --st-pending-bg: #2E2413;   --st-pending-fg: #EAC286;
     --st-flagged-dot: #E4324B;   --st-flagged-bg: rgba(228,50,75,0.16); --st-flagged-fg: #F2909D;
     --st-suspended-dot: #E4324B; --st-suspended-bg: rgba(228,50,75,0.24); --st-suspended-fg: #F6A6B0;
-    --st-certified-dot: var(--brand-gold); --st-certified-bg: #2C2413; --st-certified-fg: #E4C583;
+    --st-certified-dot: #EBB63C; --st-certified-bg: #2C2413; --st-certified-fg: #E9C877;
+    /* approved / paid / signed — green (dark) */
+    --st-approved-dot: #3FB463;  --st-approved-bg: #14291C;  --st-approved-fg: #9BD9AE;
+    --st-paid-dot: #3FB463;      --st-paid-bg: #14291C;      --st-paid-fg: #9BD9AE;
+    --st-signed-dot: #3FB463;    --st-signed-bg: #14291C;    --st-signed-fg: #9BD9AE;
 
-    --role-learner-bg: #1B2740;     --role-learner-fg: #A9C3F5;     --role-learner-ring: #5B8DEF;
-    --role-facilitator-bg: #14291C; --role-facilitator-fg: #9BD9AE; --role-facilitator-ring: #3FB463;
-    --role-sponsor-bg: #2C2413;     --role-sponsor-fg: #E4C583;     --role-sponsor-ring: var(--brand-gold);
-    --role-admin-bg: rgba(228,50,75,0.16); --role-admin-fg: #F2909D; --role-admin-ring: #E4324B;
+    --role-learner-bg: #142138;     --role-learner-fg: #BBD4FA;     --role-learner-ring: #7FB0FF;
+    --role-facilitator-bg: #2C2413; --role-facilitator-fg: #E9C877; --role-facilitator-ring: #EBB63C;
+    --role-sponsor-bg: #14291C;     --role-sponsor-fg: #9BD9AE;     --role-sponsor-ring: #3FB463;
+    --role-admin-bg: rgba(59,130,246,0.16); --role-admin-fg: #BBD4FA; --role-admin-ring: var(--brand-blue-bright);
 
-    --viz-1: #E4C583;
-    --viz-2: #E0975A;
-    --viz-3: #DB6A52;
-    --viz-4: #E4324B;
+    --viz-1: #5B8DEF;   /* Training → blue (dark) */
+    --viz-2: #3FB463;   /* COIDA → green (dark) */
+    --viz-3: #EBB63C;   /* UIF → gold (dark) */
+    --viz-4: #E4324B;   /* variance ONLY */
+    --viz-blue-deep: #2C6BD4;  /* Stipends (dark) */
+    --viz-slate: #6B7688;      /* PPE (dark) */
     --viz-grid: #262B33;
     --viz-axis: #5B636E;
     --viz-muted: #3A4049;
@@ -182,6 +205,8 @@
     --color-accent-wash-2: var(--accent-wash-2);
 
     --color-gold: var(--brand-gold);
+    --color-green: var(--brand-green);
+    --color-blue: var(--brand-blue);
 
     --radius-token: var(--radius);
 
@@ -250,6 +275,9 @@
     .badge-pending   { background: var(--st-pending-bg);   color: var(--st-pending-fg); }
     .badge-flagged   { background: var(--st-flagged-bg);   color: var(--st-flagged-fg); }
     .badge-suspended { background: var(--st-suspended-bg); color: var(--st-suspended-fg); }
+    .badge-approved  { background: var(--st-approved-bg);  color: var(--st-approved-fg); }
+    .badge-paid      { background: var(--st-paid-bg);      color: var(--st-paid-fg); }
+    .badge-signed    { background: var(--st-signed-bg);    color: var(--st-signed-fg); }
 
     .btn-primary {
       display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -286,7 +314,7 @@
     }
     .rail-item[aria-current="true"]::before {
       content: ""; position: absolute; left: -0.5rem; top: 50%; transform: translateY(-50%);
-      width: 3px; height: 1.35rem; border-radius: 999px; background: var(--brand-red);
+      width: 3px; height: 1.35rem; border-radius: 999px; background: var(--brand-blue);
     }
 
     .stat {
@@ -317,7 +345,7 @@
       display: flex; align-items: center; justify-content: center;
       border: 2px solid var(--line-strong); background: var(--surface); color: var(--ink-3);
     }
-    .timeline-node.done { border-color: var(--brand-gold); background: var(--st-certified-bg); color: var(--st-certified-fg); }
+    .timeline-node.done { border-color: var(--brand-gold); background: var(--st-completed-bg); color: var(--st-completed-fg); }
     .timeline-node.current { border-color: var(--accent); color: var(--accent); }
     .timeline-node.current::after {
       content: ""; position: absolute; width: 1.5rem; height: 1.5rem; border-radius: 999px;
@@ -339,7 +367,7 @@
     .dot-pulse { position: relative; }
     .dot-pulse::after {
       content:""; position:absolute; inset:0; border-radius:999px;
-      background: var(--brand-red); animation: dotpulse 2s ease-out infinite;
+      background: inherit; animation: dotpulse 2s ease-out infinite;
     }
   }
 
@@ -391,13 +419,13 @@
      SSO LOGIN SCREEN
      ========================================================= -->
 <div id="login" class="fixed inset-0 z-50 flex items-center justify-center px-5" style="background: var(--brand-charcoal-deep);">
-  <div class="absolute inset-0 opacity-[0.5] pointer-events-none"
-       style="background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 22px), radial-gradient(circle at 20% 15%, rgba(200,16,46,0.14), transparent 45%);"></div>
+  <div class="absolute inset-0 pointer-events-none"
+       style="background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 22px); background-color: transparent;"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(135deg, rgba(29,78,158,0.10) 0%, rgba(30,142,90,0.08) 50%, rgba(232,164,19,0.09) 100%); opacity: 1;"></div>
   <div class="relative w-full max-w-[420px]">
-    <div class="flex items-center gap-3 mb-8">
-      <span class="inline-block w-4 h-4 rounded-[3px]" style="background: var(--brand-gold);"></span>
-      <span class="type-display-1 tracking-tight" style="color:#fff; font-family: var(--font-display); font-weight:800;">TASEZ</span>
-      <span class="type-micro" style="color: var(--rail-ink-2);">Training Academy</span>
+    <div class="flex flex-col items-center justify-center mb-6 gap-2 text-center">
+      <img src="tasez-logo.png" alt="Tshwane Automotive Special Economic Zone" class="h-16 w-auto object-contain max-w-[340px]" />
+      <span class="type-micro font-bold uppercase tracking-wider mt-1" style="color: var(--rail-ink-2);">Training Academy · Learner Management System</span>
     </div>
     <div class="rounded-[18px] p-7" style="background: var(--brand-charcoal); border:1px solid var(--rail-line); box-shadow: var(--shadow-xl);">
       <h1 class="type-display-2 mb-1" style="color:#fff;">Sign in</h1>
@@ -437,10 +465,12 @@
   <!-- LEFT RAIL -->
   <aside id="rail" class="no-print fixed z-40 top-0 left-0 h-screen w-[264px] flex flex-col -translate-x-full lg:translate-x-0 transition-transform duration-200"
     style="background: var(--rail); border-right:1px solid var(--rail-line);">
-    <div class="flex items-center gap-2.5 px-5 h-16 flex-none" style="border-bottom:1px solid var(--rail-line);">
-      <span class="inline-block w-3.5 h-3.5 rounded-[3px]" style="background: var(--brand-gold);"></span>
-      <span data-railfull class="font-display font-extrabold text-[1.05rem]" style="color:#fff;">TASEZ</span>
-      <span data-railfull class="type-micro" style="color: var(--rail-ink-3);">Academy</span>
+    <div class="flex items-center gap-2.5 px-4 h-16 flex-none overflow-hidden" style="border-bottom:1px solid var(--rail-line);">
+      <img src="tasez-logo.png" alt="TASEZ Logo" class="h-8 w-auto object-contain flex-none" />
+      <div data-railfull class="truncate">
+        <span class="font-display font-extrabold text-[1.05rem] tracking-tight text-white block leading-tight">TASEZ</span>
+        <span class="type-micro block text-[0.68rem] leading-none" style="color: var(--rail-ink-2);">Training Academy</span>
+      </div>
     </div>
     <nav id="railNav" class="flex-1 overflow-y-auto fi-scroll px-3 py-4 flex flex-col gap-4"></nav>
     <div class="px-3 py-3 flex-none" style="border-top:1px solid var(--rail-line);">
@@ -634,6 +664,182 @@ const DATA = Object.freeze({
     "accreditation":{ name:"TASEZ Accreditation", purpose:"Central register of accreditation instruments, validity periods, and scope — with expiry alerting for QCTO and SETA.", chips:["Instrument register","Validity tracking","Scope of offering"] },
     "providers":{ name:"Training Providers", purpose:"Approved external training providers, contracts, and delivery performance against accredited scope.", chips:["Provider contracts","Performance","Scope verification"] },
     "nonaccredited":{ name:"Non-Accredited Programmes", purpose:"Short courses and skills programmes with attendance registers and completion records for FMPPI reporting.", chips:["Short courses","Attendance registers","Completion records"] }
+  },
+  academicRecords: {
+    "L001": {
+      learnerId: "L001", name: "Thabo Nkosi", idmask: "960312 5*** ***", programme: "Automotive Motor Mechanic (NQF 5)",
+      creditsEarned: 86, creditsTotal: 120, modulesDone: 9, modulesTotal: 14, avgGrade: 74, rplCredits: 24,
+      modules: [
+        { code: "AMM-101", title: "Workshop Safety & Precision Tools", formative: 78, summative: 82, outcome: "approved", label: "Competent" },
+        { code: "AMM-102", title: "Engine Fundamentals & Diagnostics", formative: 72, summative: 76, outcome: "approved", label: "Competent" },
+        { code: "AMM-103", title: "Auto Electrical Systems & Wiring", formative: 48, summative: 71, outcome: "approved", label: "Competent", reassessed: true,
+          reassessmentLog: [
+            { attempt: 1, score: 48, date: "12 Mar 2025", assessor: "J. van der Merwe", outcome: "Not yet competent" },
+            { attempt: 2, score: 71, date: "14 Apr 2025", assessor: "J. van der Merwe", outcome: "Competent" }
+          ]
+        },
+        { code: "AMM-104", title: "Engine Assembly & Torque Procedures", formative: 65, summative: null, outcome: "enrolled", label: "In Progress" },
+        { code: "AMM-105", title: "Transmission & Driveline Overhaul", formative: null, summative: null, outcome: "pending", label: "Scheduled" }
+      ],
+      cat: { source: "Tshwane North TVET College", credits: 12, status: "approved", note: "Verified against SAQA NLRD record · 14 Feb 2025" },
+      rpl: { portfolio: "Mechanic Assistant (2 yrs @ Rosslyn Auto Workshop)", assessor: "P. Khumalo (merSETA-7741)", date: "18 Feb 2025", credits: 24 }
+    },
+    "L002": {
+      learnerId: "L002", name: "Lerato Mokoena", idmask: "980521 6*** ***", programme: "Mechatronics Technician (NQF 6)",
+      creditsEarned: 54, creditsTotal: 180, modulesDone: 5, modulesTotal: 16, avgGrade: 81, rplCredits: 0,
+      modules: [
+        { code: "MECH-101", title: "Digital Logic & Circuit Design", formative: 84, summative: 88, outcome: "approved", label: "Competent" },
+        { code: "MECH-102", title: "Pneumatic & Hydraulic Actuators", formative: 79, summative: 83, outcome: "approved", label: "Competent" },
+        { code: "MECH-103", title: "Programmable Logic Controllers (PLC)", formative: 76, summative: null, outcome: "enrolled", label: "In Progress" }
+      ],
+      cat: { source: "Tshwane South TVET College", credits: 16, status: "approved", note: "Verified against SAQA NLRD record · 20 Jan 2025" },
+      rpl: { portfolio: "N/A — Direct Entry", assessor: "N/A", date: "N/A", credits: 0 }
+    },
+    "L005": {
+      learnerId: "L005", name: "Naledi Khumalo", idmask: "000904 1*** ***", programme: "Automotive Motor Mechanic (NQF 5)",
+      creditsEarned: 120, creditsTotal: 120, modulesDone: 14, modulesTotal: 14, avgGrade: 88, rplCredits: 36,
+      modules: [
+        { code: "AMM-101", title: "Workshop Safety & Precision Tools", formative: 90, summative: 92, outcome: "approved", label: "Competent" },
+        { code: "AMM-102", title: "Engine Fundamentals & Diagnostics", formative: 88, summative: 90, outcome: "approved", label: "Competent" },
+        { code: "AMM-103", title: "Auto Electrical Systems & Wiring", formative: 85, summative: 87, outcome: "approved", label: "Competent" },
+        { code: "AMM-104", title: "Engine Assembly & Torque Procedures", formative: 91, summative: 89, outcome: "approved", label: "Competent" }
+      ],
+      cat: { source: "Orbit TVET College", credits: 18, status: "approved", note: "Verified against SAQA NLRD record · 10 Jan 2025" },
+      rpl: { portfolio: "Senior Motor Apprentice (3 yrs)", assessor: "P. Khumalo (merSETA-7741)", date: "15 Jan 2025", credits: 36 }
+    }
+  },
+  programmeDetails: [
+    {
+      id: "p1", title: "Occupational Certificate: Automotive Motor Mechanic", nQF: "NQF Level 5", credits: 360, saqaId: "121435",
+      ofoCode: "OFO 653101 — Motor Mechanic", duration: "3 Years", activeLearners: 842, status: "approved", accreditationNote: "QCTO Accredited · Valid to 2028",
+      breakdown: { knowledge: 120, practical: 120, workplace: 120 },
+      assessments: [
+        { type: "Formative Assessments", count: "24 Internal Tasks", weight: "30%" },
+        { type: "Summative Component", count: "6 Integrated Exams", weight: "30%" },
+        { type: "External Assessment (EISA)", count: "NAMB Trade Test @ Olifantsfontein", weight: "40%" }
+      ],
+      costs: { training: 22500, coida: 1200, uif: 900, stipend: 18900, ppe: 2200 }
+    },
+    {
+      id: "p2", title: "Occupational Certificate: Mechatronics Technician", nQF: "NQF Level 6", credits: 440, saqaId: "118921",
+      ofoCode: "OFO 671101 — Mechatronics Technician", duration: "3 Years", activeLearners: 285, status: "approved", accreditationNote: "QCTO Accredited · Valid to 2027",
+      breakdown: { knowledge: 160, practical: 140, workplace: 140 },
+      assessments: [
+        { type: "Formative Assessments", count: "28 Internal Labs", weight: "30%" },
+        { type: "Summative Component", count: "8 Integrated Exams", weight: "30%" },
+        { type: "External Assessment (EISA)", count: "QCTO National EISA", weight: "40%" }
+      ],
+      costs: { training: 26000, coida: 1400, uif: 1000, stipend: 21000, ppe: 2500 }
+    },
+    {
+      id: "p3", title: "Occupational Certificate: Auto Electrician", nQF: "NQF Level 4", credits: 280, saqaId: "109412",
+      ofoCode: "OFO 653301 — Auto Electrician", duration: "2 Years", activeLearners: 80, status: "approved", accreditationNote: "merSETA Approved",
+      breakdown: { knowledge: 100, practical: 90, workplace: 90 },
+      assessments: [
+        { type: "Formative Assessments", count: "18 Tasks", weight: "30%" },
+        { type: "Summative Component", count: "4 Exams", weight: "30%" },
+        { type: "External Assessment (EISA)", count: "NAMB Trade Test", weight: "40%" }
+      ],
+      costs: { training: 19500, coida: 1000, uif: 800, stipend: 16800, ppe: 1800 }
+    },
+    {
+      id: "p4", title: "Occupational Certificate: Automotive Spray Painter", nQF: "NQF Level 3", credits: 240, saqaId: "104519",
+      ofoCode: "OFO 653201 — Spray Painter", duration: "2 Years", activeLearners: 40, status: "approved", accreditationNote: "merSETA Approved",
+      breakdown: { knowledge: 80, practical: 80, workplace: 80 },
+      assessments: [
+        { type: "Formative Assessments", count: "16 Tasks", weight: "30%" },
+        { type: "Summative Component", count: "4 Exams", weight: "30%" },
+        { type: "External Assessment (EISA)", count: "NAMB Trade Test", weight: "40%" }
+      ],
+      costs: { training: 18000, coida: 900, uif: 750, stipend: 15600, ppe: 2400 }
+    }
+  ],
+  vleData: {
+    split: { contact: 54, blended: 31, online: 15 },
+    course: {
+      code: "AMM-104", title: "Engine Systems & Diagnostic Procedures",
+      lessons: [
+        { id: "v1", title: "Video: 4-Stroke Engine Thermal Efficiency", duration: "18 min", state: "done", type: "video" },
+        { id: "v2", title: "Reading: Cylinder Head Torque & Gasket Specs", duration: "12 min", state: "done", type: "reading" },
+        { id: "v3", title: "Quiz: Electronic Fuel Injection Troubleshooting", score: "92%", state: "done", type: "quiz" },
+        { id: "v4", title: "Virtual Assessment: ECU Fault Code Simulation", proctored: true, state: "current", type: "assessment" },
+        { id: "v5", title: "Virtual Lab: Variable Valve Timing Calibration", duration: "30 min", state: "locked", type: "lab" }
+      ]
+    },
+    sparkline: [240, 310, 280, 420, 390, 510, 620],
+    avgSession: "42 min",
+    atRisk: [
+      { id: "L003", name: "Sipho Dlamini", engagement: 22, lastActive: "4 days ago" },
+      { id: "L011", name: "Kagiso Molefe", engagement: 18, lastActive: "6 days ago" },
+      { id: "L012", name: "Refilwe Diale", engagement: 25, lastActive: "3 days ago" }
+    ],
+    moderationQueue: [
+      { id: "mq1", learner: "Thabo Nkosi", submission: "AMM-103 Practical Video Submission", date: "16 Aug 2026", status: "pending" },
+      { id: "mq2", learner: "Lerato Mokoena", submission: "MECH-201 PLC Simulation Result", date: "17 Aug 2026", status: "pending" }
+    ]
+  },
+  staffData: {
+    members: [
+      { id: "S001", name: "J. van der Merwe", roles: ["Facilitator", "Assessor"], type: "Internal", quals: ["AMM NQF 5", "Auto Elec NQF 4"], regStatus: "Assessor reg. valid to Mar 2027", regState: "approved", workload: 42 },
+      { id: "S002", name: "P. Khumalo", roles: ["Assessor", "Moderator"], type: "External", quals: ["AMM NQF 5", "Mechatronics NQF 6"], regStatus: "Assessor reg. valid to Nov 2026", regState: "approved", workload: 28 },
+      { id: "S003", name: "S. Pillay", roles: ["Facilitator"], type: "Internal", quals: ["Mechatronics NQF 6"], regStatus: "Facilitator reg. valid to Jan 2028", regState: "approved", workload: 35 },
+      { id: "S004", name: "M. Botha", roles: ["Moderator"], type: "External", quals: ["AMM NQF 5"], regStatus: "Expires in 30 days", regState: "pending", workload: 18 }
+    ],
+    matrixQuals: ["AMM (NQF 5)", "Mechatronics (NQF 6)", "Auto Elec (NQF 4)", "Spray Paint (NQF 3)"],
+    matrix: [
+      { staff: "J. van der Merwe", links: { "AMM (NQF 5)": "facilitator", "Auto Elec (NQF 4)": "assessor" } },
+      { staff: "P. Khumalo", links: { "AMM (NQF 5)": "assessor", "Mechatronics (NQF 6)": "moderator" } },
+      { staff: "S. Pillay", links: { "Mechatronics (NQF 6)": "facilitator" } },
+      { staff: "M. Botha", links: { "AMM (NQF 5)": "moderator" } }
+    ]
+  },
+  centreData: {
+    centres: [
+      { id: "c1", name: "TASEZ Assessment Centre — Silverton", type: "Own Accredited Centre", accrNo: "QCTO-AC-2024/088", capacity: 60, status: "approved", statusNote: "Valid to 2028" },
+      { id: "c2", name: "Tshwane South TVET — Centurion Campus", type: "Linked External Venue", accrNo: "QCTO-AC-2022/114", capacity: 40, status: "approved", statusNote: "Valid to 2027" }
+    ],
+    eisa: [
+      { id: "e1", date: "14 Oct 2026", qual: "Automotive Motor Mechanic (NQF 5)", candidates: 24, venue: "TASEZ Silverton", nambFlag: true, status: "approved", statusLabel: "Ready" },
+      { id: "e2", date: "28 Oct 2026", qual: "Mechatronics Technician (NQF 6)", candidates: 18, venue: "Tshwane South TVET", nambFlag: false, status: "pending", statusLabel: "3 candidates missing documents", missingDocs: ["Sipho Dlamini — ID Copy", "Nomsa Radebe — Logbook Signoff", "Kagiso Molefe — Matric Cert"] },
+      { id: "e3", date: "12 Nov 2026", qual: "Auto Electrician (NQF 4)", candidates: 12, venue: "TASEZ Silverton", nambFlag: true, status: "approved", statusLabel: "Ready" }
+    ],
+    practitioners: [
+      { name: "J. van der Merwe", role: "Assessor", scope: "AMM NQF 5 · Full Scope", valid: "Mar 2027" },
+      { name: "P. Khumalo", role: "Moderator", scope: "AMM NQF 5 & Mechatronics NQF 6", valid: "Nov 2026" }
+    ]
+  },
+  accreditationData: {
+    sdpAccreditation: { accrNo: "SDP-2024-04417", status: "approved", statusNote: "Valid to 2028", nextReview: "Q3 2027 (342 days remaining)" },
+    tracker: [
+      { id: "tr1", item: "QMS Annual Review", due: "15 Sep 2026", owner: "M. Malebo", status: "approved", label: "Current" },
+      { id: "tr2", item: "Facility & Safety Audit", due: "07 Sep 2026", owner: "J. van der Merwe", status: "pending", label: "Due in 21 days" },
+      { id: "tr3", item: "Assessor & Moderator Renewal Audit", due: "30 Nov 2026", owner: "P. Khumalo", status: "approved", label: "Current" },
+      { id: "tr4", item: "QCTO Annual Performance Return", due: "31 Jan 2027", owner: "M. Malebo", status: "enrolled", label: "In Preparation" }
+    ],
+    qmsDocs: [
+      { code: "QMS-POL-01", title: "Quality Management Policy v3.2", lastReview: "Jan 2026", nextReview: "Jan 2027" },
+      { code: "QMS-POL-04", title: "Assessment & Moderation Policy v2.4", lastReview: "Mar 2026", nextReview: "Mar 2027" },
+      { code: "QMS-SOP-09", title: "RPL & CAT Operating Procedure v2.1", lastReview: "Feb 2026", nextReview: "Feb 2027" }
+    ],
+    pipeline: { qual: "Occupational Certificate: Electric Vehicle Specialist (NQF 6)", status: "enrolled", note: "Application submitted — awaiting QCTO site visit (Projected Oct 2026)" }
+  },
+  providerData: [
+    { id: "tp1", name: "Tshwane Automotive Technical Institute", accr: "merSETA-ACCR-4412", qualDelivered: "Automotive Motor Mechanic (NQF 5)", learners: 140, contractVal: 4200000, compliance: "approved", complianceLabel: "Compliant", endDate: "31 Dec 2027" },
+    { id: "tp2", name: "High-Tech Mechatronics Academy", accr: "QCTO-SDP-9918", qualDelivered: "Mechatronics Technician (NQF 6)", learners: 65, contractVal: 2850000, compliance: "pending", complianceLabel: "SLA Review Pending — Ends in 60 days", endDate: "18 Oct 2026" }
+  ],
+  nonAccreditedData: {
+    banner: "This module is reporting-isolated. Records here are excluded from QCTO and SETA accreditation reporting.",
+    events: [
+      { id: "ev1", title: "EV High-Voltage Safety Masterclass", type: "Workshop", date: "22 Aug 2026", venue: "TASEZ Auditorium", seats: 38, capacity: 40, fee: 1500, revenue: 57000, status: "approved", statusLabel: "Confirmed" },
+      { id: "ev2", title: "Automotive Robotics & Automation Symposium", type: "Symposium", date: "05 Sep 2026", venue: "BMW Rosslyn Training Centre", seats: 112, capacity: 120, fee: 2800, revenue: 313600, status: "approved", statusLabel: "Confirmed" },
+      { id: "ev3", title: "Industry 4.0 Executive Briefing", type: "Seminar", date: "18 Sep 2026", venue: "TASEZ Boardroom", seats: 15, capacity: 20, fee: 0, revenue: 0, status: "enrolled", statusLabel: "Open" }
+    ],
+    attendanceList: [
+      { id: "att1", name: "Thabo Nkosi", org: "TASEZ Academy Apprentice", attended: true },
+      { id: "att2", name: "Kagiso Molefe", org: "TASEZ Academy Apprentice", attended: true },
+      { id: "att3", name: "D. Naidoo", org: "BMW Plant Rosslyn Engineer", attended: true },
+      { id: "att4", name: "S. Coetzee", org: "Ford Silverton Specialist", attended: false }
+    ]
   }
 });
 
@@ -647,7 +853,15 @@ const state = {
   logSignedOff: {},
   learnerSearch: "",
   learnerFilter: "all",
-  countUpDone: false
+  countUpDone: false,
+  selectedLearnerId: "L001",
+  cohortLearnerCount: 24,
+  facilitatorNotified: {},
+  moderatorAssigned: {},
+  renewalFlagged: {},
+  obligationSubmitted: {},
+  attendanceToggled: {},
+  selectedProgrammeId: "p1"
 };
 
 /* =========================================================
@@ -752,8 +966,9 @@ const SCREENS = {};
 
 /* ---- Dashboard ---- */
 SCREENS.dashboard = () => {
+  const STAT_ACCENT = { learners: 'var(--brand-blue)', placements: 'var(--brand-blue)', stipends: 'var(--brand-gold)', compliance: 'var(--brand-green)' };
   const statCards = DATA.stats.map(s => `
-    <div class="stat anim-fade-up">
+    <div class="stat anim-fade-up" style="border-bottom: 3px solid ${STAT_ACCENT[s.key]||'var(--brand-blue)'};">
       <div class="type-micro text-ink-3 mb-1">${esc(s.label)}</div>
       <div class="stat-fig text-ink-1 text-[1.7rem]" data-count="${s.value}" data-decimals="${s.decimals||0}" data-prefix="${s.prefix}" data-suffix="${s.suffix}">${s.prefix}0${s.suffix}</div>
     </div>`).join("");
@@ -848,14 +1063,16 @@ function renderAnomalyPanel(){
 }
 
 function renderCostLegend(){
-  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-4","--viz-muted"];
+  // Training=blue · COIDA=green · UIF=gold · Stipends=deep-blue · PPE=slate
+  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-blue-deep","--viz-slate"];
   return `<div class="flex flex-wrap gap-x-3 gap-y-1">${DATA.costCohort.order.map((k,i)=>`
     <span class="flex items-center gap-1.5 type-micro text-ink-2"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(${ramp[i]});"></span>${esc(k)}</span>`).join("")}</div>`;
 }
 
 function renderCostChart(){
   const c = DATA.costCohort;
-  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-4","--viz-muted"];
+  // Training=blue · COIDA=green · UIF=gold · Stipends=deep-blue · PPE=slate
+  const ramp = ["--viz-1","--viz-2","--viz-3","--viz-blue-deep","--viz-slate"];
   const W=640, H=280, padL=54, padB=32, padT=10, padR=10;
   const plotW=W-padL-padR, plotH=H-padT-padB;
   const totals = c.cohorts.map(co => c.order.reduce((s,k)=>s+co.seg[k],0));
@@ -952,7 +1169,7 @@ function renderLearnerTable(){
       <td class="px-4 py-3">${statusBadge(l.status)}</td>
       <td class="px-4 py-3">
         <div class="flex items-center gap-2 min-w-[90px]">
-          <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${l.progress}%; background: var(--viz-4);"></div></div>
+          <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${l.progress}%; background: var(--brand-blue);"></div></div>
           <span class="type-micro num text-ink-3 w-8 text-right">${l.progress}%</span>
         </div>
       </td>
@@ -1089,7 +1306,7 @@ SCREENS.hosts = () => {
           <span class="type-micro font-semibold text-ink-2">Workplace hours (T. Nkosi)</span>
           <span class="type-data num font-semibold text-ink-1">${h.hoursDone.toLocaleString("en-ZA")} / ${h.hoursTotal.toLocaleString("en-ZA")}</span>
         </div>
-        <div class="h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${pct}%; background: linear-gradient(90deg, var(--viz-1), var(--viz-4));"></div></div>
+        <div class="h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${pct}%; background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-deep));"></div></div>
       </div>
     </div>
     <div class="card p-5">
@@ -1131,7 +1348,7 @@ SCREENS.sponsors = () => {
         <div><div class="type-micro text-ink-3">Disbursed</div><div class="stat-fig num text-ink-1 text-[1.3rem]">${rand(f.disbursed)}</div></div>
         <div><div class="type-micro text-ink-3">Utilisation</div><div class="stat-fig num text-ink-1 text-[1.3rem]">${util}%</div></div>
       </div>
-      <div class="mt-4 h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${util}%; background: linear-gradient(90deg, var(--viz-1), var(--viz-4));"></div></div>
+      <div class="mt-4 h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${util}%; background: linear-gradient(90deg, var(--brand-gold), var(--brand-gold-deep));"></div></div>
     </div>
     <div class="card-flush">
       <div class="p-4"><h2 class="type-h text-ink-1">Stipend disbursement</h2></div>
@@ -1234,30 +1451,749 @@ SCREENS.reports = () => {
   </div>`;
 };
 
-/* ---- Generic module preview ---- */
-SCREENS.__preview = (id) => {
-  const m = DATA.modules[id] || { name:"Module", purpose:"In full build.", chips:[] };
-  const chips = m.chips.map(c=>`<span class="badge badge-applied">${esc(c)}</span>`).join("");
-  const skel = `
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-      <div class="card p-5 lg:col-span-2 flex flex-col gap-3">
-        <div class="fi-skeleton h-4 w-1/3"></div>
-        ${Array(5).fill(0).map(()=>`<div class="flex gap-3 items-center"><div class="fi-skeleton h-8 w-8 rounded-full"></div><div class="fi-skeleton h-3 flex-1"></div><div class="fi-skeleton h-3 w-16"></div></div>`).join("")}
+/* ---- Learner Academic Records ---- */
+SCREENS.records = () => {
+  const currentId = state.selectedLearnerId || "L001";
+  const rec = DATA.academicRecords[currentId] || DATA.academicRecords["L001"];
+  const learnerOptions = Object.keys(DATA.academicRecords).map(id => {
+    const l = DATA.academicRecords[id];
+    return `<option value="${id}" ${id===currentId?'selected':''}>${esc(l.name)} (${esc(l.learnerId)})</option>`;
+  }).join("");
+
+  const moduleRows = rec.modules.map(m => {
+    const isReassessed = m.reassessed;
+    const badgeClass = m.outcome === "approved" ? "badge-approved" : m.outcome === "enrolled" ? "badge-enrolled" : "badge-pending";
+    const reassessmentHtml = isReassessed ? `
+      <div class="mt-2 text-left p-2.5 rounded-[8px]" style="background: var(--surface-2); border:1px solid var(--line);">
+        <div class="type-micro font-semibold text-ink-1 mb-1">Reassessment History:</div>
+        ${m.reassessmentLog.map(r => `
+          <div class="type-micro text-ink-2 flex justify-between py-0.5">
+            <span>Attempt ${r.attempt}: ${r.score}% (${esc(r.outcome)}) — Assessor: ${esc(r.assessor)}</span>
+            <span class="num text-ink-3">${esc(r.date)}</span>
+          </div>
+        `).join("")}
       </div>
+    ` : "";
+
+    return `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data num font-semibold text-ink-1">${esc(m.code)}</td>
+      <td class="px-4 py-3 type-data text-ink-1">
+        <div>${esc(m.title)}</div>
+        ${reassessmentHtml}
+      </td>
+      <td class="px-4 py-3 type-data num text-right">${m.formative !== null ? m.formative + '%' : '—'}</td>
+      <td class="px-4 py-3 type-data num text-right font-semibold">${m.summative !== null ? m.summative + '%' : '—'}</td>
+      <td class="px-4 py-3 text-right"><span class="badge ${badgeClass}">${esc(m.label)}</span></td>
+    </tr>`;
+  }).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="type-display-1 text-ink-1">Learner Academic Records</h1>
+        <p class="type-body text-ink-3">Credit accumulation, transcripts, RPL, and assessment audit trail</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="type-micro font-semibold text-ink-2" for="learnerSelector">Select Learner:</label>
+        <select id="learnerSelector" class="type-data rounded-[8px] px-3 py-2 bg-surface-2 text-ink-1 font-semibold" style="border:1px solid var(--line);">
+          ${learnerOptions}
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="stat anim-fade-up" style="border-bottom: 3px solid var(--brand-blue);">
+        <div class="type-micro text-ink-3 mb-1">Credits Accumulated</div>
+        <div class="stat-fig text-ink-1 text-[1.7rem]"><span class="num">${rec.creditsEarned}</span> / ${rec.creditsTotal}</div>
+      </div>
+      <div class="stat anim-fade-up" style="border-bottom: 3px solid var(--brand-blue);">
+        <div class="type-micro text-ink-3 mb-1">Modules Completed</div>
+        <div class="stat-fig text-ink-1 text-[1.7rem]"><span class="num">${rec.modulesDone}</span> / ${rec.modulesTotal}</div>
+      </div>
+      <div class="stat anim-fade-up" style="border-bottom: 3px solid var(--brand-green);">
+        <div class="type-micro text-ink-3 mb-1">Academic Average</div>
+        <div class="stat-fig text-ink-1 text-[1.7rem]"><span class="num">${rec.avgGrade}%</span></div>
+      </div>
+      <div class="stat anim-fade-up" style="border-bottom: 3px solid var(--brand-gold);">
+        <div class="type-micro text-ink-3 mb-1">RPL Credits Awarded</div>
+        <div class="stat-fig text-ink-1 text-[1.7rem]" style="color: var(--brand-gold-deep);"><span class="num">${rec.rplCredits}</span> cr</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div class="card-flush xl:col-span-2">
+        <div class="p-4 flex items-center justify-between" style="border-bottom:1px solid var(--line);">
+          <h2 class="type-h text-ink-1">Module Assessment Transcripts</h2>
+          <span class="type-micro text-ink-3">${esc(rec.name)} (${esc(rec.idmask)})</span>
+        </div>
+        <div class="overflow-x-auto fi-scroll">
+          <table class="w-full text-left min-w-[560px]">
+            <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+              <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Code</th>
+              <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Module Title</th>
+              <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Formative</th>
+              <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Summative</th>
+              <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Outcome</th>
+            </tr></thead>
+            <tbody>${moduleRows}</tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="flex flex-col gap-4">
-        <div class="card p-5 flex flex-col gap-3"><div class="fi-skeleton h-4 w-1/2"></div><div class="fi-skeleton h-20 w-full"></div></div>
-        <div class="card p-5 flex flex-col gap-2"><div class="fi-skeleton h-3 w-3/4"></div><div class="fi-skeleton h-3 w-2/3"></div><div class="fi-skeleton h-3 w-1/2"></div></div>
+        <div class="card p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-green);"></span>
+            <h3 class="type-h text-ink-1">Credit Accumulation &amp; Transfer (CAT)</h3>
+          </div>
+          <p class="type-micro text-ink-3 mb-3">Verified credit transfer from recognized tertiary TVET institution.</p>
+          <div class="rounded-[10px] p-3.5" style="background: var(--surface-2); border:1px solid var(--line);">
+            <div class="flex items-center justify-between mb-1">
+              <span class="type-data font-semibold text-ink-1">${esc(rec.cat.source)}</span>
+              <span class="badge badge-approved">${rec.cat.credits} Credits</span>
+            </div>
+            <p class="type-micro text-ink-3">${esc(rec.cat.note)}</p>
+          </div>
+        </div>
+
+        <div class="card p-5" style="border-color: var(--brand-gold);">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-gold);"></span>
+            <h3 class="type-h text-ink-1">Recognition of Prior Learning (RPL)</h3>
+          </div>
+          <div class="rounded-[10px] p-3.5" style="background: var(--st-completed-bg); border:1px solid var(--brand-gold);">
+            <div class="type-micro font-semibold" style="color: var(--st-completed-fg);">${esc(rec.rpl.portfolio)}</div>
+            <div class="type-micro text-ink-3 mt-1">Assessor: ${esc(rec.rpl.assessor)}</div>
+            <div class="type-micro text-ink-3">Moderation Date: ${esc(rec.rpl.date)}</div>
+            <div class="mt-2 text-right font-display font-extrabold text-[1.1rem]" style="color: var(--brand-gold-deep);">${rec.rpl.credits} RPL Credits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Learning Programmes ---- */
+SCREENS.programmes = () => {
+  const p = DATA.programmeDetails.find(x => x.id === (state.selectedProgrammeId || "p1")) || DATA.programmeDetails[0];
+  const count = state.cohortLearnerCount || 24;
+
+  const totalPerLearner = p.costs.training + p.costs.coida + p.costs.uif + p.costs.stipend + p.costs.ppe;
+  const totalAnnualCohort = totalPerLearner * count;
+  const total3YearCohort = totalAnnualCohort * 3;
+
+  const progCards = DATA.programmeDetails.map(prog => `
+    <div class="card p-5 cursor-pointer transition-all ${prog.id===p.id?'ring-2 ring-[var(--brand-blue)]':''}" data-prog="${prog.id}">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <span class="type-micro font-bold text-ink-3">${esc(prog.nQF)} · ${prog.credits} credits</span>
+        <span class="badge badge-approved">${esc(prog.statusNote || prog.accreditationNote)}</span>
+      </div>
+      <h3 class="type-h text-ink-1 mb-1">${esc(prog.title)}</h3>
+      <p class="type-micro text-ink-3 mb-3">${esc(prog.ofoCode)} · SAQA ID ${esc(prog.saqaId)}</p>
+      <div class="flex items-center justify-between type-micro text-ink-2 pt-3" style="border-top:1px solid var(--line-2);">
+        <span>Duration: ${esc(prog.duration)}</span>
+        <span class="font-semibold text-ink-1">${prog.activeLearners} learners</span>
+      </div>
+    </div>
+  `).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Learning Programmes</h1>
+      <p class="type-body text-ink-3">Accredited occupational qualifications, curriculum mapping &amp; PFMA cost models</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">${progCards}</div>
+
+    <div class="card p-6">
+      <div class="flex items-start justify-between gap-4 flex-wrap mb-5 pb-4" style="border-bottom:1px solid var(--line);">
+        <div>
+          <span class="badge badge-enrolled mb-1">${esc(p.nQF)} · SAQA ${esc(p.saqaId)}</span>
+          <h2 class="type-display-2 text-ink-1">${esc(p.title)}</h2>
+          <p class="type-micro text-ink-3">${esc(p.ofoCode)} · ${esc(p.accreditationNote)}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <label class="type-micro font-semibold text-ink-2" for="cohortStepper">Model Cohort Size:</label>
+          <input type="number" id="cohortStepper" value="${count}" min="1" max="200" class="num rounded-[8px] px-3 py-1.5 w-24 bg-surface-2 text-ink-1 font-bold text-center" style="border:1px solid var(--line);" />
+          <span class="type-micro text-ink-3">learners</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h3 class="type-h text-ink-1 mb-3">Curriculum Credit Structure (${p.credits} Credits)</h3>
+          <div class="mb-4">
+            <div class="flex items-center justify-between type-micro text-ink-2 mb-1.5 font-medium">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-blue);"></span>Knowledge (${p.breakdown.knowledge} cr)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-green);"></span>Practical (${p.breakdown.practical} cr)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-gold);"></span>Workplace (${p.breakdown.workplace} cr)</span>
+            </div>
+            <div class="h-3 rounded-full overflow-hidden flex" style="background: var(--surface-3);">
+              <div style="width: ${(p.breakdown.knowledge/p.credits)*100}%; background: var(--brand-blue);"></div>
+              <div style="width: ${(p.breakdown.practical/p.credits)*100}%; background: var(--brand-green);"></div>
+              <div style="width: ${(p.breakdown.workplace/p.credits)*100}%; background: var(--brand-gold);"></div>
+            </div>
+          </div>
+
+          <h3 class="type-h text-ink-1 mb-2 mt-5">Assessment Structure</h3>
+          <div class="flex flex-col gap-2">
+            ${p.assessments.map(a => `
+              <div class="flex items-center justify-between p-3 rounded-[8px]" style="background: var(--surface-2); border:1px solid var(--line-2);">
+                <div>
+                  <div class="type-data font-semibold text-ink-1">${esc(a.type)}</div>
+                  <div class="type-micro text-ink-3">${esc(a.count)}</div>
+                </div>
+                <span class="badge badge-applied">${esc(a.weight)} Weight</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="type-h text-ink-1 mb-3">PFMA Embedded Cost Model (per learner)</h3>
+          <div class="overflow-x-auto fi-scroll mb-4">
+            <table class="w-full text-left">
+              <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+                <th scope="col" class="px-3 py-2 type-micro font-semibold text-ink-3">Cost Element</th>
+                <th scope="col" class="px-3 py-2 type-micro font-semibold text-ink-3 text-right">Annual / Learner</th>
+                <th scope="col" class="px-3 py-2 type-micro font-semibold text-ink-3 text-right">Cohort (${count} Learners)</th>
+              </tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line-2);"><td class="px-3 py-2 type-data text-ink-2">Training Fees</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.training)}</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.training*count)}</td></tr>
+                <tr style="border-bottom:1px solid var(--line-2);"><td class="px-3 py-2 type-data text-ink-2">COIDA Insurance</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.coida)}</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.coida*count)}</td></tr>
+                <tr style="border-bottom:1px solid var(--line-2);"><td class="px-3 py-2 type-data text-ink-2">UIF Contribution</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.uif)}</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.uif*count)}</td></tr>
+                <tr style="border-bottom:1px solid var(--line-2);"><td class="px-3 py-2 type-data text-ink-2">Stipend Disbursement</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.stipend)}</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.stipend*count)}</td></tr>
+                <tr style="border-bottom:1px solid var(--line-2);"><td class="px-3 py-2 type-data text-ink-2">PPE &amp; Toolkits</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.ppe)}</td><td class="px-3 py-2 type-data num text-right">${rand(p.costs.ppe*count)}</td></tr>
+                <tr class="font-bold" style="background: var(--surface-2);"><td class="px-3 py-2.5 type-data text-ink-1">Total Annual Cost</td><td class="px-3 py-2.5 type-data num text-right text-ink-1">${rand(totalPerLearner)}</td><td class="px-3 py-2.5 type-data num text-right text-ink-1">${rand(totalAnnualCohort)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-4 rounded-[10px]" style="background: var(--st-enrolled-bg); border:1px solid var(--brand-blue);">
+            <div class="type-micro font-semibold" style="color: var(--st-enrolled-fg);">3-Year Full Qualification Projection (${count} Learners)</div>
+            <div class="stat-fig num text-[1.6rem] font-extrabold mt-1" style="color: var(--brand-blue);">${rand(total3YearCohort)}</div>
+            <div class="type-micro text-ink-3 mt-0.5">Reconciled against PFMA Discretionary Grant Allocations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Virtual Learning Environment ---- */
+SCREENS.vle = () => {
+  const vle = DATA.vleData;
+  const course = vle.course;
+
+  const lessonItems = course.lessons.map(l => {
+    const iconState = l.state === 'done'
+      ? `<span class="w-6 h-6 rounded-full flex items-center justify-center text-white" style="background: var(--brand-green);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>`
+      : l.state === 'current'
+      ? `<span class="w-6 h-6 rounded-full border-2 flex items-center justify-center" style="border-color: var(--brand-blue);"><span class="w-2 h-2 rounded-full" style="background: var(--brand-blue);"></span></span>`
+      : `<span class="w-6 h-6 rounded-full bg-surface-3 flex items-center justify-center text-ink-3"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>`;
+
+    return `
+    <div class="flex items-center justify-between p-3.5 rounded-[10px]" style="background: var(--surface-2); border:1px solid var(--line);">
+      <div class="flex items-center gap-3">
+        ${iconState}
+        <div>
+          <div class="type-data font-semibold text-ink-1">${esc(l.title)}</div>
+          <div class="type-micro text-ink-3">${l.duration || l.score || 'Interactive'}</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        ${l.proctored ? `<span class="badge badge-enrolled">Proctored</span>` : ''}
+        <span class="type-micro font-semibold capitalize text-ink-2">${esc(l.state)}</span>
       </div>
     </div>`;
+  }).join("");
+
+  const atRiskRows = vle.atRisk.map(r => {
+    const notified = state.facilitatorNotified[r.id];
+    return `
+    <div class="flex items-center justify-between p-3 rounded-[8px]" style="background: var(--surface-2); border:1px solid var(--line-2);">
+      <div>
+        <div class="type-data font-semibold text-ink-1">${esc(r.name)}</div>
+        <div class="type-micro text-ink-3">Engagement: ${r.engagement}% · Last active: ${esc(r.lastActive)}</div>
+      </div>
+      <div>
+        ${notified
+          ? `<span class="badge badge-approved">Facilitator notified · 10:52 SAST</span>`
+          : `<button class="btn-primary !py-1 !px-2.5 text-[0.75rem]" data-vle-notify="${r.id}">Notify facilitator</button>`}
+      </div>
+    </div>`;
+  }).join("");
+
+  const modRows = vle.moderationQueue.map(m => {
+    const assigned = state.moderatorAssigned[m.id];
+    return `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(m.learner)}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(m.submission)}</td>
+      <td class="px-4 py-3 type-micro text-ink-3 num">${esc(m.date)}</td>
+      <td class="px-4 py-3 text-right">
+        ${assigned
+          ? `<span class="badge badge-approved">Moderator: ${esc(assigned)}</span>`
+          : `<button class="btn-primary !py-1 !px-2.5 text-[0.75rem]" data-vle-assign="${m.id}">Assign moderator</button>`}
+      </td>
+    </tr>`;
+  }).join("");
+
   return `
-  <div class="flex flex-col gap-2">
-    <div class="flex items-center gap-2 flex-wrap">
-      <h1 class="type-display-1 text-ink-1">${esc(m.name)}</h1>
-      <span class="badge badge-enrolled">In full build</span>
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Virtual Learning Environment (VLE)</h1>
+      <p class="type-body text-ink-3">Blended delivery, course shells, learner engagement analytics &amp; moderation</p>
     </div>
-    <p class="type-body text-ink-2 max-w-[720px]">${esc(m.purpose)}</p>
-    <div class="flex gap-2 flex-wrap mt-2">${chips}</div>
-    ${skel}
+
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="type-h text-ink-1">Delivery Mode Distribution</h3>
+        <span class="type-micro text-ink-3 font-semibold">SA-Hosted · POPIA Aligned</span>
+      </div>
+      <div class="flex items-center justify-between type-micro text-ink-2 mb-1.5 font-medium">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-blue);"></span>Contact (${vle.split.contact}%)</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-green);"></span>Blended (${vle.split.blended}%)</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-gold);"></span>Online (${vle.split.online}%)</span>
+      </div>
+      <div class="h-3 rounded-full overflow-hidden flex" style="background: var(--surface-3);">
+        <div style="width: ${vle.split.contact}%; background: var(--brand-blue);"></div>
+        <div style="width: ${vle.split.blended}%; background: var(--brand-green);"></div>
+        <div style="width: ${vle.split.online}%; background: var(--brand-gold);"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div class="card p-5 xl:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <span class="badge badge-enrolled mb-1">${course.code}</span>
+            <h2 class="type-h text-ink-1">${esc(course.title)}</h2>
+          </div>
+          <span class="type-micro text-ink-3">5 Modules</span>
+        </div>
+        <div class="flex flex-col gap-2.5">${lessonItems}</div>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <div class="card p-5">
+          <h3 class="type-h text-ink-1 mb-1">Engagement Analytics</h3>
+          <p class="type-micro text-ink-3 mb-3">Average Session Duration: <span class="font-bold text-ink-1">${vle.avgSession}</span></p>
+          <div class="flex flex-col gap-2 mb-4">
+            <div class="type-micro text-ink-3 font-semibold">At-Risk Learners (&lt;30% Engagement):</div>
+            ${atRiskRows}
+          </div>
+        </div>
+
+        <div class="card-flush">
+          <div class="p-4" style="border-bottom:1px solid var(--line);">
+            <h3 class="type-h text-ink-1">Moderation Queue</h3>
+          </div>
+          <div class="overflow-x-auto fi-scroll">
+            <table class="w-full text-left min-w-[340px]">
+              <tbody>${modRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Teaching & Assessment Staff ---- */
+SCREENS.staff = () => {
+  const staff = DATA.staffData;
+
+  const staffRows = staff.members.map(m => {
+    const isFlagged = state.renewalFlagged[m.id];
+    const rolesHtml = m.roles.map(r => `<span class="badge badge-${r==='Facilitator'?'completed':r==='Assessor'?'approved':'certified'}">${r}</span>`).join(" ");
+    const qualsHtml = m.quals.map(q => `<span class="badge badge-applied">${esc(q)}</span>`).join(" ");
+
+    return `
+    <tr style="border-bottom:1px solid var(--line-2);" class="cursor-pointer hover:bg-surface-2" data-staff-drawer="${m.id}">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(m.name)}</td>
+      <td class="px-4 py-3">${rolesHtml}</td>
+      <td class="px-4 py-3"><span class="badge badge-${m.type==='Internal'?'enrolled':'applied'}">${m.type}</span></td>
+      <td class="px-4 py-3">${qualsHtml}</td>
+      <td class="px-4 py-3 type-micro">
+        ${isFlagged
+          ? `<span class="badge badge-approved">Renewal flagged · 10:52 SAST</span>`
+          : m.regState === 'pending'
+          ? `<div class="flex items-center gap-2"><span class="badge badge-pending">${esc(m.regStatus)}</span><button class="btn-primary !py-1 !px-2.5 text-[0.75rem]" data-staff-renew="${m.id}">Flag for renewal</button></div>`
+          : `<span class="badge badge-approved">${esc(m.regStatus)}</span>`}
+      </td>
+      <td class="px-4 py-3 type-data num text-right font-semibold">${m.workload} learners</td>
+    </tr>`;
+  }).join("");
+
+  const matrixHeaders = staff.matrixQuals.map(q => `<th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-center">${esc(q)}</th>`).join("");
+
+  const matrixRows = staff.matrix.map(r => {
+    const cells = staff.matrixQuals.map(q => {
+      const role = r.links[q];
+      const dot = role === 'facilitator'
+        ? `<span class="w-3 h-3 rounded-full inline-block" style="background: var(--brand-blue);" title="Facilitates"></span>`
+        : role === 'assessor'
+        ? `<span class="w-3 h-3 rounded-full inline-block" style="background: var(--brand-green);" title="Assesses"></span>`
+        : role === 'moderator'
+        ? `<span class="w-3 h-3 rounded-full inline-block" style="background: var(--brand-gold);" title="Moderates"></span>`
+        : `<span class="type-micro text-ink-3">—</span>`;
+      return `<td class="px-4 py-3 text-center">${dot}</td>`;
+    }).join("");
+
+    return `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(r.staff)}</td>
+      ${cells}
+    </tr>`;
+  }).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Teaching &amp; Assessment Staff</h1>
+      <p class="type-body text-ink-3">Facilitators, assessors, moderators, qualification linkages &amp; access control</p>
+    </div>
+
+    <div class="card-flush">
+      <div class="p-4" style="border-bottom:1px solid var(--line);">
+        <h2 class="type-h text-ink-1">Staff Practitioner Register</h2>
+      </div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[720px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Name</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Roles</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Type</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Linked Qualifications</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Registration Status</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Workload</th>
+          </tr></thead>
+          <tbody>${staffRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <div>
+          <h2 class="type-h text-ink-1">Qualification-Linkage Matrix</h2>
+          <p class="type-micro text-ink-3">Staff assignments mapped across accredited occupational offerings</p>
+        </div>
+        <div class="flex items-center gap-4 type-micro font-medium text-ink-2">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-blue);"></span>Facilitator</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-green);"></span>Assessor</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-gold);"></span>Moderator</span>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[600px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Practitioner</th>
+            ${matrixHeaders}
+          </tr></thead>
+          <tbody>${matrixRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Assessment Centres ---- */
+SCREENS.centres = () => {
+  const cd = DATA.centreData;
+
+  const centreCards = cd.centres.map(c => `
+    <div class="card p-5">
+      <div class="flex items-start justify-between mb-2">
+        <span class="badge badge-approved">${esc(c.statusNote)}</span>
+        <span class="type-micro text-ink-3">Accr: ${esc(c.accrNo)}</span>
+      </div>
+      <h3 class="type-h text-ink-1 mb-1">${esc(c.name)}</h3>
+      <p class="type-micro text-ink-3 mb-3">${esc(c.type)}</p>
+      <div class="type-micro text-ink-2 pt-2 font-semibold" style="border-top:1px solid var(--line-2);">
+        Capacity: ${c.capacity} candidates / session
+      </div>
+    </div>`).join("");
+
+  const eisaRows = cd.eisa.map(e => `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data num font-semibold text-ink-1">${esc(e.date)}</td>
+      <td class="px-4 py-3 type-data text-ink-1">
+        <div>${esc(e.qual)}</div>
+        ${e.missingDocs ? `<div class="type-micro text-ink-3 mt-1">Missing: ${e.missingDocs.join(" · ")}</div>` : ''}
+      </td>
+      <td class="px-4 py-3 type-data num text-center">${e.candidates}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(e.venue)}</td>
+      <td class="px-4 py-3">
+        <span class="badge badge-${e.status==='approved'?'approved':'pending'}">${esc(e.statusLabel)}</span>
+        ${e.nambFlag ? `<span class="badge badge-enrolled ml-1">NAMB Trade Test</span>` : ''}
+      </td>
+      <td class="px-4 py-3 text-right">
+        <button class="btn-ghost !py-1.5 !px-3 text-[0.8rem]" data-modal-eisa="${e.id}">Generate QCTO Candidate File</button>
+      </td>
+    </tr>`).join("");
+
+  const practitionerRows = cd.practitioners.map(p => `
+    <div class="flex items-center justify-between p-3.5 rounded-[10px]" style="background: var(--surface-2); border:1px solid var(--line);">
+      <div>
+        <div class="type-data font-semibold text-ink-1">${esc(p.name)} (${esc(p.role)})</div>
+        <div class="type-micro text-ink-3">Scope: ${esc(p.scope)}</div>
+      </div>
+      <span class="badge badge-approved">Valid to ${esc(p.valid)}</span>
+    </div>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Assessment Centres</h1>
+      <p class="type-body text-ink-3">Accredited assessment venues, EISA trade test scheduling &amp; candidate readiness</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">${centreCards}</div>
+
+    <div class="card-flush">
+      <div class="p-4 flex items-center justify-between" style="border-bottom:1px solid var(--line);">
+        <h2 class="type-h text-ink-1">Upcoming EISA &amp; Trade Test Schedule</h2>
+      </div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[680px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Date</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Qualification / Document Check</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-center">Candidates</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Venue</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Readiness</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Action</th>
+          </tr></thead>
+          <tbody>${eisaRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <h2 class="type-h text-ink-1 mb-3">Centre Practitioner Register</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${practitionerRows}</div>
+    </div>
+  </div>`;
+};
+
+/* ---- TASEZ Accreditation ---- */
+SCREENS.accreditation = () => {
+  const acc = DATA.accreditationData;
+
+  const trackerRows = acc.tracker.map(t => {
+    const isSubmitted = state.obligationSubmitted[t.id];
+    return `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(t.item)}</td>
+      <td class="px-4 py-3 type-micro text-ink-3 num">${esc(t.due)}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(t.owner)}</td>
+      <td class="px-4 py-3">
+        ${isSubmitted
+          ? `<span class="badge badge-approved">Submitted · 10:52 SAST</span>`
+          : `<span class="badge badge-${t.status==='approved'?'approved':t.status==='pending'?'pending':'enrolled'}">${esc(t.label)}</span>`}
+      </td>
+      <td class="px-4 py-3 text-right">
+        ${!isSubmitted && t.status === 'pending'
+          ? `<button class="btn-primary !py-1 !px-2.5 text-[0.75rem]" data-acc-submit="${t.id}">Submit audit</button>`
+          : `<span class="type-micro text-ink-3">Actioned</span>`}
+      </td>
+    </tr>`;
+  }).join("");
+
+  const qmsRows = acc.qmsDocs.map(q => `
+    <div class="flex items-center justify-between p-3.5 rounded-[10px]" style="background: var(--surface-2); border:1px solid var(--line);">
+      <div>
+        <div class="type-data font-semibold text-ink-1">${esc(q.code)}: ${esc(q.title)}</div>
+        <div class="type-micro text-ink-3">Last reviewed: ${esc(q.lastReview)}</div>
+      </div>
+      <span class="type-micro font-semibold text-ink-2">Next: ${esc(q.nextReview)}</span>
+    </div>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">TASEZ Accreditation</h1>
+      <p class="type-body text-ink-3">QCTO Skills Development Provider standing, regulatory tracker &amp; scope expansion</p>
+    </div>
+
+    <div class="card p-6" style="border-color: var(--brand-green);">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <span class="badge badge-approved mb-1">QCTO SDP Accreditation · ${esc(acc.sdpAccreditation.statusNote)}</span>
+          <h2 class="type-display-2 text-ink-1">TASEZ Training Academy</h2>
+          <p class="type-micro text-ink-3">Accreditation No: <span class="num font-semibold text-ink-1">${esc(acc.sdpAccreditation.accrNo)}</span></p>
+        </div>
+        <div class="text-right">
+          <div class="type-micro text-ink-3">Next Scheduled QCTO Review:</div>
+          <div class="type-data font-extrabold text-ink-1" style="color: var(--brand-green-deep);">${esc(acc.sdpAccreditation.nextReview)}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-flush">
+      <div class="p-4" style="border-bottom:1px solid var(--line);">
+        <h2 class="type-h text-ink-1">Regulatory Compliance Requirement Tracker</h2>
+      </div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[600px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Obligation</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Due Date</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Owner</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Status</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Action</th>
+          </tr></thead>
+          <tbody>${trackerRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div class="card p-5">
+        <h2 class="type-h text-ink-1 mb-3">QMS Document Register</h2>
+        <div class="flex flex-col gap-2.5">${qmsRows}</div>
+      </div>
+
+      <div class="card p-5">
+        <h2 class="type-h text-ink-1 mb-2">Scope-Extension Pipeline</h2>
+        <div class="p-4 rounded-[10px]" style="background: var(--st-enrolled-bg); border:1px solid var(--brand-blue);">
+          <div class="type-data font-semibold text-ink-1">${esc(acc.pipeline.qual)}</div>
+          <p class="type-micro text-ink-3 mt-1">${esc(acc.pipeline.note)}</p>
+          <span class="badge badge-enrolled mt-2">QCTO Inspection Pending</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Training Providers ---- */
+SCREENS.providers = () => {
+  const provs = DATA.providerData;
+
+  const rows = provs.map(p => `
+    <tr style="border-bottom:1px solid var(--line-2);" class="cursor-pointer hover:bg-surface-2" data-provider-drawer="${p.id}">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(p.name)}</td>
+      <td class="px-4 py-3 type-micro text-ink-3 num">${esc(p.accr)}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(p.qualDelivered)}</td>
+      <td class="px-4 py-3 type-data num text-center">${p.learners}</td>
+      <td class="px-4 py-3 type-data num text-right font-semibold">${rand(p.contractVal)}</td>
+      <td class="px-4 py-3"><span class="badge badge-${p.compliance==='approved'?'approved':'pending'}">${esc(p.complianceLabel)}</span></td>
+      <td class="px-4 py-3 type-micro text-ink-3 num text-right">${esc(p.endDate)}</td>
+    </tr>`).join("");
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Training Providers</h1>
+      <p class="type-body text-ink-3">Contracted accredited providers, delivery performance &amp; SLA compliance</p>
+    </div>
+
+    <div class="card-flush">
+      <div class="p-4" style="border-bottom:1px solid var(--line);">
+        <h2 class="type-h text-ink-1">Contracted Provider Register</h2>
+      </div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[760px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Provider Name</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Provider Accreditation</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Delivered Qualification</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-center">Learners</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Contract Value</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Compliance</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">End Date</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ---- Non-Accredited Programmes ---- */
+SCREENS.nonaccredited = () => {
+  const nonacc = DATA.nonAccreditedData;
+
+  const eventRows = nonacc.events.map(e => `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="px-4 py-3 type-data text-ink-1 font-semibold">${esc(e.title)}</td>
+      <td class="px-4 py-3"><span class="badge badge-enrolled">${esc(e.type)}</span></td>
+      <td class="px-4 py-3 type-micro text-ink-3 num">${esc(e.date)}</td>
+      <td class="px-4 py-3 type-data text-ink-2">${esc(e.venue)}</td>
+      <td class="px-4 py-3 type-data num text-center">${e.seats} / ${e.capacity}</td>
+      <td class="px-4 py-3 type-data num text-right">${e.fee > 0 ? rand(e.fee) : 'Free'}</td>
+      <td class="px-4 py-3 type-data num text-right font-semibold">${rand(e.revenue)}</td>
+      <td class="px-4 py-3 text-right"><span class="badge badge-approved">${esc(e.statusLabel)}</span></td>
+    </tr>`).join("");
+
+  const attendeeRows = nonacc.attendanceList.map(a => {
+    const isAttended = state.attendanceToggled[a.id] !== undefined ? state.attendanceToggled[a.id] : a.attended;
+    return `
+    <div class="flex items-center justify-between p-3 rounded-[8px]" style="background: var(--surface-2); border:1px solid var(--line-2);">
+      <div>
+        <div class="type-data font-semibold text-ink-1">${esc(a.name)}</div>
+        <div class="type-micro text-ink-3">${esc(a.org)}</div>
+      </div>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" ${isAttended ? 'checked' : ''} data-attendance-toggle="${a.id}" class="w-4 h-4 rounded accent-[var(--brand-blue)]" />
+        <span class="type-micro font-semibold ${isAttended?'text-ink-1':'text-ink-3'}">${isAttended?'Attended':'Absent'}</span>
+      </label>
+    </div>`;
+  }).join("");
+
+  const attendedCount = nonacc.attendanceList.filter(a => state.attendanceToggled[a.id] !== undefined ? state.attendanceToggled[a.id] : a.attended).length;
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">Non-Accredited Programmes</h1>
+      <p class="type-body text-ink-3">Short courses, workshops, symposiums &amp; isolated attendance tracking</p>
+    </div>
+
+    <!-- Ring-Fence Banner -->
+    <div class="card p-4 flex items-center gap-3" style="background: rgba(29,78,158,0.08); border-color: var(--brand-blue);">
+      <span class="w-3 h-3 rounded-full flex-none" style="background: var(--brand-blue);"></span>
+      <div class="type-data text-ink-1 font-medium">${esc(nonacc.banner)}</div>
+    </div>
+
+    <div class="card-flush">
+      <div class="p-4" style="border-bottom:1px solid var(--line);">
+        <h2 class="type-h text-ink-1">Short Courses &amp; Events Register</h2>
+      </div>
+      <div class="overflow-x-auto fi-scroll">
+        <table class="w-full text-left min-w-[760px]">
+          <thead><tr style="border-bottom:1px solid var(--line); background: var(--surface-2);">
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Title</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Type</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Date</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3">Venue</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-center">Booked Seats</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Fee / Seat</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Revenue</th>
+            <th scope="col" class="px-4 py-2.5 type-micro font-semibold text-ink-3 text-right">Status</th>
+          </tr></thead>
+          <tbody>${eventRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <div>
+          <h2 class="type-h text-ink-1">Event Attendance Register (EV High-Voltage Masterclass)</h2>
+          <p class="type-micro text-ink-3">Live attendance tally: <span class="font-bold text-ink-1">${attendedCount} / ${nonacc.attendanceList.length} present</span></p>
+        </div>
+        <button class="btn-ghost !py-1.5 !px-3 text-[0.8rem]" data-modal-attendance="ev1">Print Attendance Register</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${attendeeRows}</div>
+    </div>
   </div>`;
 };
 
@@ -1280,9 +2216,9 @@ function openFunderReport(){
       <button class="btn-ghost !py-1.5" onclick="window.print()">Print</button>
       <button class="btn-ghost !py-1.5" data-modal-close>Close</button>
     </div>
-    <div class="flex items-center gap-3 pb-4 mb-5" style="border-bottom:2px solid var(--brand-red);">
-      <span class="inline-block w-4 h-4 rounded-[3px]" style="background: var(--brand-gold);"></span>
-      <span class="font-display font-extrabold text-[1.4rem] text-ink-1">TASEZ</span>
+    <div class="flex items-center gap-3 pb-4 mb-5" style="border-bottom:2px solid var(--brand-blue);">
+      <img src="tasez-logo.png" alt="TASEZ Logo" class="h-8 w-auto object-contain flex-none" />
+      <span class="font-display font-extrabold text-[1.3rem] text-ink-1">TASEZ</span>
       <span class="type-micro text-ink-3">Training Academy · Funder Report</span>
       <span class="ml-auto type-micro text-ink-3 num">Issued 17 Aug 2026 · SAST</span>
     </div>
@@ -1298,8 +2234,6 @@ function openFunderReport(){
     <h2 class="type-h text-ink-1 mb-2">Disbursement schedule</h2>
     <table class="w-full mb-8"><thead><tr style="border-bottom:1px solid var(--line-strong);">
       <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Month</th>
-      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Cohort</th>
-      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Learners</th>
       <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Amount</th>
     </tr></thead><tbody>${rows}</tbody></table>
     <div class="grid grid-cols-2 gap-8 pt-8">
@@ -1321,10 +2255,11 @@ function openCertificate(){
     <div class="p-6 sm:p-10 text-center" style="border:2px solid var(--brand-charcoal); border-radius: 8px; position:relative;">
       <div class="absolute inset-2 pointer-events-none" style="border:1px solid var(--brand-gold); border-radius:6px;"></div>
       <div class="relative">
-        <div class="flex items-center justify-center gap-2 mb-6">
-          <span class="inline-block w-3.5 h-3.5 rounded-[3px]" style="background: var(--brand-gold);"></span>
-          <span class="font-display font-extrabold text-[1.2rem] text-ink-1">TASEZ Training Academy</span>
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <img src="tasez-logo.png" alt="TASEZ Logo" class="h-10 w-auto object-contain" />
+          <span class="font-display font-extrabold text-[1.3rem] text-ink-1">TASEZ Training Academy</span>
         </div>
+        <div class="h-px mb-5 mx-auto max-w-[320px]" style="background: var(--brand-blue); opacity: 0.6;"></div>
         <p class="type-micro uppercase tracking-[0.25em] text-ink-3 mb-4">Certificate of Competence</p>
         <p class="type-body text-ink-3 mb-1">This certifies that</p>
         <h1 class="font-display font-extrabold text-[2rem] text-ink-1 mb-3">${esc(c.learner)}</h1>
@@ -1342,6 +2277,9 @@ function openCertificate(){
           <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">Academy Director</div></div>
           <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">QCTO Representative</div></div>
         </div>
+        <p class="type-micro mt-6 pt-3" style="color: var(--brand-green-deep); border-top: 1px solid var(--line-2);">
+          Verify at <span class="font-semibold">academy.tasez.co.za</span> · Serial <span class="num font-semibold">${esc(c.serial)}</span>
+        </p>
       </div>
     </div>
   </div>`;
@@ -1460,6 +2398,158 @@ function wireDashboard(){
   });
 }
 
+function openQctoCandidateFile(eisaId){
+  const eisa = DATA.centreData.eisa.find(x => x.id === eisaId) || DATA.centreData.eisa[0];
+  const candidates = DATA.learners.slice(0, 5);
+  const rows = candidates.map((c, i) => `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="py-2 type-data num text-ink-3">${i + 1}</td>
+      <td class="py-2 type-data font-semibold text-ink-1">${esc(c.name)}</td>
+      <td class="py-2 type-data num text-ink-2">${esc(c.idmask)}</td>
+      <td class="py-2 type-data text-ink-2">${esc(c.programme)}</td>
+      <td class="py-2 text-right"><span class="badge badge-approved">Verified Ready</span></td>
+    </tr>
+  `).join("");
+
+  const html = `
+  <div class="card p-8 print-region" style="background: var(--surface);">
+    <div class="no-print flex justify-end gap-2 mb-4">
+      <button class="btn-ghost !py-1.5" onclick="window.print()">Print</button>
+      <button class="btn-ghost !py-1.5" data-modal-close>Close</button>
+    </div>
+    <div class="flex items-center gap-3 pb-4 mb-5" style="border-bottom:2px solid var(--brand-blue);">
+      <img src="tasez-logo.png" alt="TASEZ Logo" class="h-8 w-auto object-contain flex-none" />
+      <span class="font-display font-extrabold text-[1.3rem] text-ink-1">TASEZ</span>
+      <span class="type-micro text-ink-3">Assessment Centre · QCTO Candidate File</span>
+      <span class="ml-auto type-micro text-ink-3 num">Issued 17 Aug 2026 · SAST</span>
+    </div>
+    <h1 class="type-display-2 text-ink-1 mb-1">${esc(eisa.qual)}</h1>
+    <p class="type-micro text-ink-3 mb-5">Venue: ${esc(eisa.venue)} · Assessment Date: ${esc(eisa.date)} · NAMB Aligned</p>
+    <table class="w-full mb-8"><thead><tr style="border-bottom:1px solid var(--line-strong);">
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">#</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Candidate Name</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">National ID</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Programme</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Status</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="grid grid-cols-2 gap-8 pt-8">
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">Chief Invigilator / Assessor Signature</div></div>
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">QCTO Quality Assurer Signature</div></div>
+    </div>
+  </div>`;
+  openModal(html);
+}
+
+function openAttendanceRegisterModal(eventId){
+  const ev = DATA.nonAccreditedData.events.find(x => x.id === eventId) || DATA.nonAccreditedData.events[0];
+  const attendees = DATA.nonAccreditedData.attendanceList;
+  const rows = attendees.map((a, i) => `
+    <tr style="border-bottom:1px solid var(--line-2);">
+      <td class="py-2 type-data num text-ink-3">${i + 1}</td>
+      <td class="py-2 type-data font-semibold text-ink-1">${esc(a.name)}</td>
+      <td class="py-2 type-data text-ink-2">${esc(a.org)}</td>
+      <td class="py-2 text-center"><span class="badge ${a.attended?'badge-approved':'badge-pending'}">${a.attended?'Present':'Absent'}</span></td>
+      <td class="py-2 text-right"><div class="h-px w-24 ml-auto" style="background: var(--ink-3);"></div></td>
+    </tr>
+  `).join("");
+
+  const html = `
+  <div class="card p-8 print-region" style="background: var(--surface);">
+    <div class="no-print flex justify-end gap-2 mb-4">
+      <button class="btn-ghost !py-1.5" onclick="window.print()">Print</button>
+      <button class="btn-ghost !py-1.5" data-modal-close>Close</button>
+    </div>
+    <div class="flex items-center gap-3 pb-4 mb-5" style="border-bottom:2px solid var(--brand-blue);">
+      <img src="tasez-logo.png" alt="TASEZ Logo" class="h-8 w-auto object-contain flex-none" />
+      <span class="font-display font-extrabold text-[1.3rem] text-ink-1">TASEZ</span>
+      <span class="type-micro text-ink-3">Non-Accredited Programme · Official Attendance Register</span>
+      <span class="ml-auto type-micro text-ink-3 num">Date: ${esc(ev.date)}</span>
+    </div>
+    <h1 class="type-display-2 text-ink-1 mb-1">${esc(ev.title)}</h1>
+    <p class="type-micro text-ink-3 mb-5">Venue: ${esc(ev.venue)} · Type: ${esc(ev.type)} · Isolated Reporting Record</p>
+    <table class="w-full mb-8"><thead><tr style="border-bottom:1px solid var(--line-strong);">
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">#</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Attendee Name</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-left">Organisation</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-center">Status</th>
+      <th scope="col" class="py-1.5 type-micro font-semibold text-ink-3 text-right">Signature</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="grid grid-cols-2 gap-8 pt-8">
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">Event Facilitator Signature</div></div>
+      <div><div class="h-px mb-1" style="background: var(--ink-3);"></div><div class="type-micro text-ink-3">TASEZ Programme Manager</div></div>
+    </div>
+  </div>`;
+  openModal(html);
+}
+
+function openStaffDrawer(staffId){
+  const s = DATA.staffData.members.find(x => x.id === staffId) || DATA.staffData.members[0];
+  const permissions = [
+    { module: "Dashboard & Analytics", view: true, edit: false },
+    { module: "Learner Transcripts", view: true, edit: true },
+    { module: "Virtual Learning Environment", view: true, edit: true },
+    { module: "Assessment Centres", view: true, edit: false },
+    { module: "Financials & Grant Administration", view: s.type === "Internal", edit: false },
+    { module: "TASEZ Accreditation Register", view: s.type === "Internal", edit: false }
+  ];
+
+  const permRows = permissions.map(p => `
+    <div class="flex items-center justify-between py-2" style="border-bottom:1px solid var(--line-2);">
+      <span class="type-data text-ink-1">${esc(p.module)}</span>
+      <div class="flex items-center gap-2">
+        <span class="badge ${p.view?'badge-approved':'badge-pending'}">${p.view?'View Access':'Restricted'}</span>
+        ${p.edit ? `<span class="badge badge-enrolled">Edit</span>` : ''}
+      </div>
+    </div>
+  `).join("");
+
+  const html = `
+  <div class="p-2">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-10 h-10 rounded-full flex items-center justify-center font-bold" style="background: var(--role-admin-bg); color: var(--role-admin-fg);">${esc(s.name.split(" ").map(n=>n[0]).join(""))}</span>
+      <div>
+        <h2 class="type-h text-ink-1">${esc(s.name)}</h2>
+        <p class="type-micro text-ink-3">${s.roles.join(" · ")} (${s.type})</p>
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="type-micro font-semibold text-ink-2 mb-1">Registration Status:</div>
+      <span class="badge badge-approved">${esc(s.regStatus)}</span>
+    </div>
+    <div class="mb-4">
+      <div class="type-micro font-semibold text-ink-2 mb-2">Module-Level Access Rights Matrix:</div>
+      <div class="flex flex-col gap-1">${permRows}</div>
+    </div>
+  </div>`;
+
+  $("#drawerBody").innerHTML = html;
+  $("#drawer").classList.remove("hidden");
+}
+
+function openProviderDrawer(providerId){
+  const p = DATA.providerData.find(x => x.id === providerId) || DATA.providerData[0];
+  const html = `
+  <div class="p-2">
+    <h2 class="type-h text-ink-1 mb-1">${esc(p.name)}</h2>
+    <p class="type-micro text-ink-3 mb-4">Accreditation: ${esc(p.accr)}</p>
+    <div class="card p-3 mb-4" style="background: var(--surface-2);">
+      <div class="type-micro text-ink-3">Qualification Delivered Under Provider Scope:</div>
+      <div class="type-data font-semibold text-ink-1 mt-0.5">${esc(p.qualDelivered)}</div>
+    </div>
+    <div class="mb-4">
+      <div class="type-micro font-semibold text-ink-2 mb-2">SLA Milestones &amp; Compliance Checklist:</div>
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between items-center type-micro"><span class="text-ink-1">SETA Accreditation Certificate</span><span class="badge badge-approved">Verified</span></div>
+        <div class="flex justify-between items-center type-micro"><span class="text-ink-1">Facility OHS Inspection Report</span><span class="badge badge-approved">Verified</span></div>
+        <div class="flex justify-between items-center type-micro"><span class="text-ink-1">Q2 SLA Audit Return</span><span class="badge badge-pending">Review Pending</span></div>
+      </div>
+    </div>
+  </div>`;
+
+  $("#drawerBody").innerHTML = html;
+  $("#drawer").classList.remove("hidden");
+}
+
 /* =========================================================
    EVENT DELEGATION
    ========================================================= */
@@ -1472,6 +2562,33 @@ document.addEventListener("click", (e)=>{
   const learner = t.closest("[data-learner]");
   if(learner){ SCREENS.learnerDetail && showScreen("learnerDetail"); return; }
 
+  const prog = t.closest("[data-prog]");
+  if(prog){ state.selectedProgrammeId = prog.dataset.prog; showScreen("programmes"); return; }
+
+  const vleNotify = t.closest("[data-vle-notify]");
+  if(vleNotify){ state.facilitatorNotified[vleNotify.dataset.vleNotify] = true; showScreen("vle"); return; }
+
+  const vleAssign = t.closest("[data-vle-assign]");
+  if(vleAssign){ state.moderatorAssigned[vleAssign.dataset.vleAssign] = "P. Khumalo"; showScreen("vle"); return; }
+
+  const staffRenew = t.closest("[data-staff-renew]");
+  if(staffRenew){ state.renewalFlagged[staffRenew.dataset.staffRenew] = true; showScreen("staff"); return; }
+
+  const staffDrawer = t.closest("[data-staff-drawer]");
+  if(staffDrawer){ openStaffDrawer(staffDrawer.dataset.staffDrawer); return; }
+
+  const accSubmit = t.closest("[data-acc-submit]");
+  if(accSubmit){ state.obligationSubmitted[accSubmit.dataset.accSubmit] = true; showScreen("accreditation"); return; }
+
+  const providerDrawer = t.closest("[data-provider-drawer]");
+  if(providerDrawer){ openProviderDrawer(providerDrawer.dataset.providerDrawer); return; }
+
+  const modalEisa = t.closest("[data-modal-eisa]");
+  if(modalEisa){ openQctoCandidateFile(modalEisa.dataset.modalEisa); return; }
+
+  const modalAtt = t.closest("[data-modal-attendance]");
+  if(modalAtt){ openAttendanceRegisterModal(modalAtt.dataset.modalAttendance); return; }
+
   const filter = t.closest("[data-filter]");
   if(filter){ state.learnerFilter = filter.dataset.filter; $("#learnerTableWrap").innerHTML = renderLearnerTable(); renderRailNoop(); refreshFilterChips(); return; }
 
@@ -1480,7 +2597,6 @@ document.addEventListener("click", (e)=>{
     const id = suspend.dataset.suspend;
     state.anomaliesActioned[id] = "Suspended by M. Malebo · 17 Aug 2026 10:52 · SAST";
     $("#anomalyPanel").innerHTML = renderAnomalyPanel();
-    // if all resolved, clear the bell dot
     if(DATA.anomalies.every(a=>state.anomaliesActioned[a.id])) $("#bellDot").classList.add("hidden");
     return;
   }
