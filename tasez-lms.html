@@ -3003,21 +3003,6 @@ document.addEventListener("click", (e)=>{
 
   if(t.closest("[data-modal-close]")){ closeModal(); return; }
 
-  if(t.id==="btnFillExec"){
-    $("#loginEmail").value = "m.malebo@tasez.co.za";
-    return;
-  }
-  if(t.id==="btnFillLearner"){
-    $("#loginEmail").value = "t.nkosi@tasez.co.za";
-    return;
-  }
-  if(t.id==="topbarSwitcher" || t.closest("#topbarSwitcher")){
-    state.currentUser = state.currentUser === "learner" ? "executive" : "learner";
-    updateTopbarRole();
-    showScreen(state.currentUser === "learner" ? "learnerDashboard" : "dashboard");
-    return;
-  }
-
   if(t.id==="themeToggle" || t.closest("#themeToggle")){ toggleTheme(); return; }
   if(t.id==="railToggle" || t.closest("#railToggle")){ openRail(); return; }
   if(t.id==="railCollapse" || t.closest("#railCollapse")){ toggleCollapse(); return; }
@@ -3137,6 +3122,19 @@ $("#loginForm").addEventListener("submit",(e)=>{
 
 /* init rail so it's ready */
 renderRail();
+
+/* Direct click listeners for login presets and topbar switcher */
+$("#btnFillExec").addEventListener("click", () => {
+  $("#loginEmail").value = "m.malebo@tasez.co.za";
+});
+$("#btnFillLearner").addEventListener("click", () => {
+  $("#loginEmail").value = "t.nkosi@tasez.co.za";
+});
+$("#topbarSwitcher").addEventListener("click", () => {
+  state.currentUser = state.currentUser === "learner" ? "executive" : "learner";
+  updateTopbarRole();
+  showScreen(state.currentUser === "learner" ? "learnerDashboard" : "dashboard");
+});
 </script>
 </body>
 </html>
