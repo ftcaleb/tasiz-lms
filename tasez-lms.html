@@ -433,7 +433,7 @@
       <form id="loginForm" class="flex flex-col gap-4">
         <label class="flex flex-col gap-1.5">
           <span class="type-micro font-semibold" style="color: var(--rail-ink-2);">Work email</span>
-          <input type="email" value="m.malebo@tasez.co.za" autocomplete="username"
+          <input id="loginEmail" type="email" value="m.malebo@tasez.co.za" autocomplete="username"
             class="num rounded-[10px] px-3.5 py-2.5 text-[0.9rem]"
             style="background: var(--brand-charcoal-deep); border:1px solid var(--rail-line); color:#fff;" />
         </label>
@@ -443,6 +443,13 @@
             class="rounded-[10px] px-3.5 py-2.5 text-[0.9rem]"
             style="background: var(--brand-charcoal-deep); border:1px solid var(--rail-line); color:#fff;" />
         </label>
+        <div class="flex flex-col gap-2 mt-1">
+          <span class="type-micro font-semibold" style="color: var(--rail-ink-2);">Quick demo presets:</span>
+          <div class="flex gap-2 flex-wrap">
+            <button type="button" id="btnFillExec" class="btn-ghost !px-2.5 !py-1 text-[0.75rem]" style="border: 1px solid var(--rail-line); color: #fff;">Maria Malebo (Executive)</button>
+            <button type="button" id="btnFillLearner" class="btn-ghost !px-2.5 !py-1 text-[0.75rem]" style="border: 1px solid var(--rail-line); color: #fff;">Thabo Nkosi (Learner)</button>
+          </div>
+        </div>
         <button id="loginBtn" type="submit" class="btn-primary mt-2 w-full py-2.5">
           <span id="loginBtnLabel">Sign in</span>
           <svg id="loginSpinner" class="hidden animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
@@ -504,7 +511,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
           <span id="bellDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full dot-pulse" style="background: var(--brand-red);"></span>
         </button>
-        <button class="hidden sm:flex items-center gap-2 rounded-full pl-2 pr-3 py-1" style="border:1px solid var(--line); background: var(--surface-2);" aria-label="Role switcher: Maria Malebo, Executive">
+        <button id="topbarSwitcher" class="hidden sm:flex items-center gap-2 rounded-full pl-2 pr-3 py-1" style="border:1px solid var(--line); background: var(--surface-2);" aria-label="Role switcher: Maria Malebo, Executive">
           <span class="w-7 h-7 rounded-full flex items-center justify-center text-[0.7rem] font-bold" style="background: var(--role-admin-bg); color: var(--role-admin-fg); box-shadow: 0 0 0 2px var(--role-admin-ring);">MM</span>
           <span class="text-left leading-tight">
             <span class="block type-micro font-semibold text-ink-1">Maria Malebo</span>
@@ -848,6 +855,7 @@ const DATA = Object.freeze({
    ========================================================= */
 const state = {
   screen: "dashboard",
+  currentUser: "executive", // "executive" | "learner"
   railCollapsed: false,
   anomaliesActioned: {},
   logSignedOff: {},
@@ -861,7 +869,8 @@ const state = {
   renewalFlagged: {},
   obligationSubmitted: {},
   attendanceToggled: {},
-  selectedProgrammeId: "p1"
+  selectedProgrammeId: "p1",
+  learnerLogs: []
 };
 
 /* =========================================================
@@ -905,6 +914,22 @@ const RAIL_GROUPS = [
   ]}
 ];
 
+const LEARNER_RAIL_GROUPS = [
+  { group:"My Space", items:[
+    { id:"learnerDashboard", label:"My Dashboard", icon:"grid" },
+    { id:"records", label:"My Transcript", icon:"file" }
+  ]},
+  { group:"Academic", items:[
+    { id:"vle", label:"VLE Coursework", icon:"monitor" }
+  ]},
+  { group:"Workplace Placements", items:[
+    { id:"hosts", label:"Host Placements", icon:"factory" }
+  ]},
+  { group:"Credentials", items:[
+    { id:"certification", label:"My Certificate", icon:"award" }
+  ]}
+];
+
 const ICONS = {
   grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
   users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
@@ -930,7 +955,8 @@ function icon(name, size=20){
    ========================================================= */
 function renderRail(){
   const nav = $("#railNav");
-  nav.innerHTML = RAIL_GROUPS.map(g => `
+  const groups = state.currentUser === "learner" ? LEARNER_RAIL_GROUPS : RAIL_GROUPS;
+  nav.innerHTML = groups.map(g => `
     <div class="flex flex-col gap-1">
       <span data-railfull class="type-micro font-semibold uppercase tracking-wider px-2 mb-0.5" style="color: var(--rail-ink-3); font-size:0.65rem;">${esc(g.group)}</span>
       ${g.items.map(it => `
@@ -963,6 +989,117 @@ function showScreen(id){
    SCREENS
    ========================================================= */
 const SCREENS = {};
+
+/* ---- Learner Dashboard ---- */
+SCREENS.learnerDashboard = () => {
+  const learner = DATA.academicRecords["L001"];
+  const d = DATA.learnerDetail;
+  const hp = DATA.host;
+  
+  const totalHours = hp.hoursTotal;
+  const currentHours = hp.hoursDone + state.learnerLogs.reduce((acc, log) => acc + parseFloat(log.hours || 0), 0);
+  const hourPercent = Math.min(100, Math.round(currentHours / totalHours * 100));
+
+  const stats = [
+    { label: "Credits Earned", value: `${learner.creditsEarned} / ${learner.creditsTotal} cr`, color: "var(--brand-blue)" },
+    { label: "VLE Lessons Completed", value: "3 / 5", color: "var(--brand-green)" },
+    { label: "Workplace Hours Completed", value: `${currentHours.toLocaleString("en-ZA")} / ${totalHours.toLocaleString("en-ZA")}`, color: "var(--brand-gold)" }
+  ];
+
+  const statCards = stats.map(s => `
+    <div class="stat anim-fade-up" style="border-bottom: 3px solid ${s.color};">
+      <div class="type-micro text-ink-3 mb-1">${esc(s.label)}</div>
+      <div class="stat-fig text-ink-1 text-[1.5rem] font-bold num">${esc(s.value)}</div>
+    </div>`).join("");
+
+  const tl = d.timeline.map((t, i) => `
+    <div class="flex gap-3 relative pb-5">
+      ${i < d.timeline.length - 1 ? `<span class="absolute left-3 top-6 bottom-0 w-px" style="background: var(--line-2);"></span>` : ''}
+      <span class="timeline-node ${t.state} relative z-10">
+        ${t.state === 'done' ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>' : t.state === 'current' ? '<span class="w-2 h-2 rounded-full" style="background: var(--accent);"></span>' : '<span class="w-2 h-2 rounded-full" style="background: var(--line-strong);"></span>'}
+      </span>
+      <div class="pt-0.5">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="type-data font-semibold text-ink-1">${esc(t.title)}</span>
+        </div>
+        <div class="type-micro text-ink-3 num">${esc(t.date)}</div>
+        <div class="type-micro text-ink-2 mt-0.5">${esc(t.note)}</div>
+      </div>
+    </div>`).join("");
+
+  const logsList = state.learnerLogs.map(log => `
+    <div class="p-3.5 rounded-[10px]" style="background: var(--surface-2); border: 1px solid var(--line-2);">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="type-micro text-ink-3 num">${esc(log.date)} · ${log.hours} hours</div>
+          <div class="type-data font-semibold text-ink-1">${esc(log.task)}</div>
+        </div>
+        <span class="badge badge-pending">Pending Approval</span>
+      </div>
+    </div>
+  `).join("");
+
+  const logsPlaceholder = logsList.length > 0 ? logsList : `
+    <div class="text-center py-6 text-ink-3 type-micro">
+      No manual logbook entries pending approval. Use the Host Placement section to submit a log.
+    </div>
+  `;
+
+  return `
+  <div class="flex flex-col gap-6">
+    <div class="card p-5">
+      <div class="flex items-center gap-4 flex-wrap">
+        <span class="w-14 h-14 rounded-full flex items-center justify-center text-[1.1rem] font-bold" style="background: var(--role-learner-bg); color: var(--role-learner-fg); box-shadow: 0 0 0 2px var(--role-learner-ring);">TN</span>
+        <div>
+          <span class="badge badge-enrolled mb-1">Active Apprentice</span>
+          <h1 class="type-display-1 text-ink-1">${esc(learner.name)}</h1>
+          <p class="type-body text-ink-3 num">SA ID ${esc(learner.idmask)} · ${esc(learner.programme)}</p>
+        </div>
+        <div class="ml-auto flex flex-col gap-1 items-end">
+          <span class="type-micro text-ink-3">Host Placement</span>
+          <span class="type-data font-semibold text-ink-1">${esc(d.host)}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">${statCards}</div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div class="card p-5 lg:col-span-2">
+        <h2 class="type-h text-ink-1 mb-4">My Lifecycle Roadmap</h2>
+        <div class="flex flex-col">${tl}</div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="card p-5">
+          <h2 class="type-h text-ink-1 mb-3">Workplace Hours Progress</h2>
+          <div class="flex justify-between items-center type-micro text-ink-2 mb-1.5 font-semibold">
+            <span>Logbook Completion</span>
+            <span>${hourPercent}%</span>
+          </div>
+          <div class="h-2.5 rounded-full overflow-hidden mb-3" style="background: var(--surface-3);">
+            <div class="h-full rounded-full" style="width: ${hourPercent}%; background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-deep));"></div>
+          </div>
+          <p class="type-micro text-ink-3">Required for trade test: ${totalHours.toLocaleString("en-ZA")} hours.</p>
+        </div>
+
+        <div class="card p-5">
+          <h2 class="type-h text-ink-1 mb-3">Compliance Documents</h2>
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center type-micro"><span class="text-ink-1">Certified ID copy</span><span class="badge badge-approved">Verified</span></div>
+            <div class="flex justify-between items-center type-micro"><span class="text-ink-1">Matric certificate</span><span class="badge badge-approved">Verified</span></div>
+            <div class="flex justify-between items-center type-micro"><span class="text-ink-1">POPIA consent form</span><span class="badge badge-approved">Signed</span></div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <h2 class="type-h text-ink-1 mb-3">Recent Logs Submitted</h2>
+          <div class="flex flex-col gap-2.5">${logsPlaceholder}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
 
 /* ---- Dashboard ---- */
 SCREENS.dashboard = () => {
@@ -1265,7 +1402,103 @@ SCREENS.learnerDetail = () => {
 /* ---- Host Companies ---- */
 SCREENS.hosts = () => {
   const h = DATA.host;
-  const pct = Math.round(h.hoursDone/h.hoursTotal*100);
+  
+  // Calculate total hours based on base data + user submitted logs
+  const userSubmittedHours = state.learnerLogs.reduce((acc, log) => acc + parseFloat(log.hours || 0), 0);
+  const currentHours = h.hoursDone + userSubmittedHours;
+  const pct = Math.min(100, Math.round(currentHours / h.hoursTotal * 100));
+
+  if (state.currentUser === "learner") {
+    const defaultLogsHtml = h.logbook.map(e => `
+      <div class="rounded-[10px] p-3.5" style="background: var(--surface-2); border:1px solid var(--line);">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <div class="type-micro text-ink-3 num">${esc(e.range)} · ${e.hours} hours</div>
+            <div class="type-data font-semibold text-ink-1">${esc(e.task)}</div>
+            <div class="type-micro text-ink-2 mt-0.5">Self-assessment: ${esc(e.self)}</div>
+          </div>
+          <span class="badge badge-completed">Signed — ${esc(e.signoff.by || "J. van der Merwe")}</span>
+        </div>
+      </div>
+    `).join("");
+
+    const userLogsHtml = state.learnerLogs.map(log => `
+      <div class="rounded-[10px] p-3.5" style="background: var(--surface-2); border:1px solid var(--line-strong);">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <div class="type-micro text-ink-3 num">${esc(log.date)} · ${log.hours} hours</div>
+            <div class="type-data font-semibold text-ink-1">${esc(log.task)}</div>
+            <div class="type-micro text-ink-2 mt-0.5">Self-assessment: ${esc(log.self)}</div>
+          </div>
+          <span class="badge badge-pending">Awaiting Mentor Signoff</span>
+        </div>
+      </div>
+    `).join("");
+
+    return `
+    <div class="flex flex-col gap-5">
+      <div>
+        <h1 class="type-display-1 text-ink-1">My Host Placement</h1>
+        <p class="type-body text-ink-3">Track workplace hours and submit logbook records for mentor approval</p>
+      </div>
+
+      <div class="card p-5">
+        <div class="flex items-start gap-4 flex-wrap">
+          <div class="w-12 h-12 rounded-[10px] flex items-center justify-center flex-none" style="background: var(--surface-3); color: var(--ink-2);">${icon("factory",24)}</div>
+          <div class="flex-1 min-w-[180px]">
+            <h2 class="type-h text-ink-1">${esc(h.name)}</h2>
+            <p class="type-micro text-ink-3">BMW Group Mentor: J. van der Merwe (Assessor No. merSETA-9041)</p>
+          </div>
+          <span class="badge badge-completed self-center">${esc(h.approval)}</span>
+        </div>
+        <div class="mt-4 pt-4" style="border-top:1px solid var(--line);">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="type-micro font-semibold text-ink-2">Workplace Hours Progress</span>
+            <span class="type-data num font-semibold text-ink-1">${currentHours.toLocaleString("en-ZA")} / ${h.hoursTotal.toLocaleString("en-ZA")} hrs</span>
+          </div>
+          <div class="h-2.5 rounded-full overflow-hidden" style="background: var(--surface-3);"><div class="h-full rounded-full" style="width:${pct}%; background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-deep));"></div></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="card p-5 lg:col-span-2 flex flex-col gap-4">
+          <h2 class="type-h text-ink-1">My Workplace Logbook</h2>
+          <div class="flex flex-col gap-2.5">
+            ${userLogsHtml}
+            ${defaultLogsHtml}
+          </div>
+        </div>
+
+        <div class="card p-5 h-fit">
+          <h2 class="type-h text-ink-1 mb-3">Submit Logbook Entry</h2>
+          <form id="learnerLogForm" class="flex flex-col gap-4">
+            <label class="flex flex-col gap-1.5">
+              <span class="type-micro font-semibold text-ink-2">Date / Week Range</span>
+              <input type="text" id="logDate" placeholder="e.g. 17 – 21 Aug 2026" required class="type-data rounded-[8px] px-3 py-2 bg-surface-2" style="border:1px solid var(--line);" />
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="type-micro font-semibold text-ink-2">Hours Completed</span>
+              <input type="number" id="logHours" value="40" min="1" max="80" required class="num type-data rounded-[8px] px-3 py-2 bg-surface-2 text-center" style="border:1px solid var(--line);" />
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="type-micro font-semibold text-ink-2">Task Executed</span>
+              <textarea id="logTask" placeholder="Detail the specific tasks performed on site..." required class="type-data rounded-[8px] px-3 py-2 bg-surface-2 h-20" style="border:1px solid var(--line); resize:none;"></textarea>
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="type-micro font-semibold text-ink-2">Self-Assessment Status</span>
+              <select id="logSelf" class="type-data rounded-[8px] px-3 py-2 bg-surface-2" style="border:1px solid var(--line);">
+                <option value="Competent">Competent (Task executed independently)</option>
+                <option value="Developing">Developing (Under supervision)</option>
+                <option value="Entry Level">Beginning / Learner</option>
+              </select>
+            </label>
+            <button type="submit" class="btn-primary w-full py-2.5 mt-2">Submit logbook entry</button>
+          </form>
+        </div>
+      </div>
+    </div>`;
+  }
+
   const rows = h.logbook.map((e,i)=>{
     const signed = e.signoff.state==="signed" || state.logSignedOff[i];
     const by = e.signoff.by || "J. van der Merwe";
@@ -1370,6 +1603,96 @@ SCREENS.sponsors = () => {
 
 /* ---- Certification ---- */
 SCREENS.certification = () => {
+  if (state.currentUser === "learner") {
+    // Let user toggle between Thabo (L001 - pending) and Naledi (L005 - completed) for interactive presentation
+    const activeDemoLearner = state.selectedLearnerId === "L005" ? "L005" : "L001";
+    const lData = activeDemoLearner === "L005" ? {
+      name: "Naledi Khumalo",
+      status: "completed",
+      serial: "TTA-2026-004417",
+      issue: "17 Aug 2026",
+      prog: "Automotive Motor Mechanic (NQF 5)"
+    } : {
+      name: "Thabo Nkosi",
+      status: "pending",
+      serial: "TTA-2026-PENDING",
+      issue: "Pending trade test",
+      prog: "Automotive Motor Mechanic (NQF 5)"
+    };
+
+    const actionHtml = lData.status === "completed" ? `
+      <div class="p-6 rounded-[12px] text-center" style="background: var(--st-completed-bg); border: 2px dashed var(--brand-gold);">
+        <h3 class="type-h font-bold mb-2" style="color: var(--st-completed-fg);">Certificate Ready for Download</h3>
+        <p class="type-micro mb-4" style="color: var(--st-completed-fg);">Your Certificate of Competence (SAQA ID 121435) has been officially issued by the QCTO.</p>
+        <button class="btn-primary py-2 px-5 mx-auto flex items-center gap-2" data-cert="preview">
+          ${icon("award",18)}
+          Preview & Print Digital Certificate
+        </button>
+      </div>
+    ` : `
+      <div class="p-6 rounded-[12px] text-center bg-surface-2" style="border: 1px solid var(--line);">
+        <h3 class="type-h font-semibold text-ink-1 mb-2">Trade Test Clearance Required</h3>
+        <p class="type-micro text-ink-3 mb-4">Your certificate will be released automatically upon receiving competent results from your external trade test.</p>
+        <div class="flex items-center justify-center gap-2 text-ink-2 type-micro">
+          <span class="w-2.5 h-2.5 rounded-full dot-pulse" style="background: var(--brand-gold);"></span>
+          NAMB External Assessment: Scheduled for 14 Oct 2026
+        </div>
+      </div>
+    `;
+
+    return `
+    <div class="flex flex-col gap-5">
+      <div class="flex justify-between items-center gap-4 flex-wrap">
+        <div>
+          <h1 class="type-display-1 text-ink-1">My Credentials</h1>
+          <p class="type-body text-ink-3">View and download your digital certificates of competence and trade test approvals</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="type-micro font-semibold text-ink-2" for="certDemoSelector">Demo Context:</label>
+          <select id="certDemoSelector" class="type-data rounded-[8px] px-3 py-2 bg-surface-2 text-ink-1 font-semibold" style="border:1px solid var(--line);">
+            <option value="L001" ${activeDemoLearner==="L001"?'selected':''}>Thabo Nkosi (Pending EISA)</option>
+            <option value="L005" ${activeDemoLearner==="L005"?'selected':''}>Naledi Khumalo (Completed & Certified)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card p-5">
+        <h2 class="type-h text-ink-1 mb-4">Qualification Certificate Status</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="flex flex-col gap-3">
+            <div class="type-micro text-ink-3">Candidate Name: <span class="font-bold text-ink-1">${esc(lData.name)}</span></div>
+            <div class="type-micro text-ink-3">Occupational offering: <span class="font-bold text-ink-1">${esc(lData.prog)}</span></div>
+            <div class="type-micro text-ink-3">Issue Date: <span class="font-bold text-ink-1">${esc(lData.issue)}</span></div>
+            <div class="type-micro text-ink-3">Serial Reference: <span class="font-bold text-ink-1 num">${esc(lData.serial)}</span></div>
+          </div>
+          <div>${actionHtml}</div>
+        </div>
+      </div>
+
+      <div class="card p-5">
+        <h2 class="type-h text-ink-1 mb-3">QCTO Certification Step Clearance</h2>
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-between p-3.5 rounded-[10px] bg-surface-2">
+            <div class="type-data font-semibold text-ink-1">1. Assessor Quality Signoff</div>
+            <span class="badge badge-approved">Competent Verified</span>
+          </div>
+          <div class="flex items-center justify-between p-3.5 rounded-[10px] bg-surface-2">
+            <div class="type-data font-semibold text-ink-1">2. Internal Moderator Verification</div>
+            <span class="badge badge-approved">Completed</span>
+          </div>
+          <div class="flex items-center justify-between p-3.5 rounded-[10px] bg-surface-2">
+            <div class="type-data font-semibold text-ink-1">3. External Assessment (EISA Trade Test)</div>
+            <span class="badge ${lData.status==='completed'?'badge-approved':'badge-pending'}">${lData.status==='completed'?'Competent Verified':'Awaiting Assessment'}</span>
+          </div>
+          <div class="flex items-center justify-between p-3.5 rounded-[10px] bg-surface-2">
+            <div class="type-data font-semibold text-ink-1">4. QCTO Accreditation Council Approval</div>
+            <span class="badge ${lData.status==='completed'?'badge-approved':'badge-pending'}">${lData.status==='completed'?'Approved & Issued':'Pending Trade Test'}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
   const q = DATA.certification.queue.map(c=>`
     <tr style="border-bottom:1px solid var(--line-2);">
       <td class="px-4 py-3 type-data num font-semibold text-ink-1">${esc(c.serial)}</td>
@@ -1453,7 +1776,7 @@ SCREENS.reports = () => {
 
 /* ---- Learner Academic Records ---- */
 SCREENS.records = () => {
-  const currentId = state.selectedLearnerId || "L001";
+  const currentId = state.currentUser === "learner" ? "L001" : (state.selectedLearnerId || "L001");
   const rec = DATA.academicRecords[currentId] || DATA.academicRecords["L001"];
   const learnerOptions = Object.keys(DATA.academicRecords).map(id => {
     const l = DATA.academicRecords[id];
@@ -1488,19 +1811,27 @@ SCREENS.records = () => {
     </tr>`;
   }).join("");
 
+  const selectorHtml = state.currentUser === "learner" ? `
+    <div class="flex items-center gap-2">
+      <span class="badge badge-approved">Candidate View: ${esc(rec.name)}</span>
+    </div>
+  ` : `
+    <div class="flex items-center gap-2">
+      <label class="type-micro font-semibold text-ink-2" for="learnerSelector">Select Learner:</label>
+      <select id="learnerSelector" class="type-data rounded-[8px] px-3 py-2 bg-surface-2 text-ink-1 font-semibold" style="border:1px solid var(--line);">
+        ${learnerOptions}
+      </select>
+    </div>
+  `;
+
   return `
   <div class="flex flex-col gap-5">
     <div class="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <h1 class="type-display-1 text-ink-1">Learner Academic Records</h1>
+        <h1 class="type-display-1 text-ink-1">${state.currentUser === "learner" ? "My Academic Transcript" : "Learner Academic Records"}</h1>
         <p class="type-body text-ink-3">Credit accumulation, transcripts, RPL, and assessment audit trail</p>
       </div>
-      <div class="flex items-center gap-2">
-        <label class="type-micro font-semibold text-ink-2" for="learnerSelector">Select Learner:</label>
-        <select id="learnerSelector" class="type-data rounded-[8px] px-3 py-2 bg-surface-2 text-ink-1 font-semibold" style="border:1px solid var(--line);">
-          ${learnerOptions}
-        </select>
-      </div>
+      ${selectorHtml}
     </div>
 
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1778,6 +2109,27 @@ SCREENS.vle = () => {
         <div class="flex flex-col gap-2.5">${lessonItems}</div>
       </div>
 
+  const rightColumn = state.currentUser === "learner" ? `
+    <div class="flex flex-col gap-5">
+      <div class="card p-5">
+        <h3 class="type-h text-ink-1 mb-2">My Facilitator</h3>
+        <div class="flex items-center gap-3 p-2 rounded bg-surface-2">
+          <span class="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-[0.8rem]">JM</span>
+          <div>
+            <div class="type-micro font-semibold text-ink-1">J. van der Merwe</div>
+            <div class="type-micro text-ink-3">Internal Facilitator & Assessor</div>
+          </div>
+        </div>
+      </div>
+      <div class="card p-5">
+        <h3 class="type-h text-ink-1 mb-2">My Study Goal</h3>
+        <p class="type-micro text-ink-3">Complete all AMM-104 e-learning modules before NAMB trade test on 14 Oct 2026.</p>
+        <div class="mt-4 p-3 rounded-[8px]" style="background: var(--st-enrolled-bg); border: 1px solid var(--brand-blue);">
+          <div class="type-micro font-semibold" style="color: var(--st-enrolled-fg);">Current Progress: 60%</div>
+        </div>
+      </div>
+    </div>
+  ` : `
       <div class="flex flex-col gap-5">
         <div class="card p-5">
           <h3 class="type-h text-ink-1 mb-1">Engagement Analytics</h3>
@@ -1799,6 +2151,45 @@ SCREENS.vle = () => {
           </div>
         </div>
       </div>
+  `;
+
+  return `
+  <div class="flex flex-col gap-5">
+    <div>
+      <h1 class="type-display-1 text-ink-1">${state.currentUser === "learner" ? "My VLE Coursework" : "Virtual Learning Environment (VLE)"}</h1>
+      <p class="type-body text-ink-3">${state.currentUser === "learner" ? "Online modules, videos, and formative quizzes assigned to your program" : "Blended delivery, course shells, learner engagement analytics & moderation"}</p>
+    </div>
+
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="type-h text-ink-1">Delivery Mode Distribution</h3>
+        <span class="type-micro text-ink-3 font-semibold">SA-Hosted · POPIA Aligned</span>
+      </div>
+      <div class="flex items-center justify-between type-micro text-ink-2 mb-1.5 font-medium">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-blue);"></span>Contact (${vle.split.contact}%)</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-green);"></span>Blended (${vle.split.blended}%)</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[2px]" style="background: var(--brand-gold);"></span>Online (${vle.split.online}%)</span>
+      </div>
+      <div class="h-3 rounded-full overflow-hidden flex" style="background: var(--surface-3);">
+        <div style="width: ${vle.split.contact}%; background: var(--brand-blue);"></div>
+        <div style="width: ${vle.split.blended}%; background: var(--brand-green);"></div>
+        <div style="width: ${vle.split.online}%; background: var(--brand-gold);"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div class="card p-5 xl:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <span class="badge badge-enrolled mb-1">${course.code}</span>
+            <h2 class="type-h text-ink-1">${esc(course.title)}</h2>
+          </div>
+          <span class="type-micro text-ink-3">5 Modules</span>
+        </div>
+        <div class="flex flex-col gap-2.5">${lessonItems}</div>
+      </div>
+
+      ${rightColumn}
     </div>
   </div>`;
 };
@@ -2612,6 +3003,21 @@ document.addEventListener("click", (e)=>{
 
   if(t.closest("[data-modal-close]")){ closeModal(); return; }
 
+  if(t.id==="btnFillExec"){
+    $("#loginEmail").value = "m.malebo@tasez.co.za";
+    return;
+  }
+  if(t.id==="btnFillLearner"){
+    $("#loginEmail").value = "t.nkosi@tasez.co.za";
+    return;
+  }
+  if(t.id==="topbarSwitcher" || t.closest("#topbarSwitcher")){
+    state.currentUser = state.currentUser === "learner" ? "executive" : "learner";
+    updateTopbarRole();
+    showScreen(state.currentUser === "learner" ? "learnerDashboard" : "dashboard");
+    return;
+  }
+
   if(t.id==="themeToggle" || t.closest("#themeToggle")){ toggleTheme(); return; }
   if(t.id==="railToggle" || t.closest("#railToggle")){ openRail(); return; }
   if(t.id==="railCollapse" || t.closest("#railCollapse")){ toggleCollapse(); return; }
@@ -2658,8 +3064,64 @@ document.addEventListener("mousemove",(e)=>{
 /* =========================================================
    LOGIN → SHELL (orchestrated moment #1)
    ========================================================= */
+function updateTopbarRole() {
+  const btn = $("#topbarSwitcher");
+  if (!btn) return;
+  if (state.currentUser === "learner") {
+    btn.innerHTML = `
+      <span class="w-7 h-7 rounded-full flex items-center justify-center text-[0.7rem] font-bold" style="background: var(--role-learner-bg); color: var(--role-learner-fg); box-shadow: 0 0 0 2px var(--role-learner-ring);">TN</span>
+      <span class="text-left leading-tight">
+        <span class="block type-micro font-semibold text-ink-1">Thabo Nkosi</span>
+        <span class="block type-micro text-ink-3">Learner · Apprentice</span>
+      </span>
+    `;
+    btn.setAttribute("aria-label", "Role switcher: Thabo Nkosi, Learner");
+  } else {
+    btn.innerHTML = `
+      <span class="w-7 h-7 rounded-full flex items-center justify-center text-[0.7rem] font-bold" style="background: var(--role-admin-bg); color: var(--role-admin-fg); box-shadow: 0 0 0 2px var(--role-admin-ring);">MM</span>
+      <span class="text-left leading-tight">
+        <span class="block type-micro font-semibold text-ink-1">Maria Malebo</span>
+        <span class="block type-micro text-ink-3">Executive · ICT</span>
+      </span>
+    `;
+    btn.setAttribute("aria-label", "Role switcher: Maria Malebo, Executive");
+  }
+}
+
+document.addEventListener("change", (e)=>{
+  const t = e.target;
+  if(t.id === "learnerSelector"){
+    state.selectedLearnerId = t.value;
+    showScreen("records");
+  }
+  if(t.id === "certDemoSelector"){
+    state.selectedLearnerId = t.value;
+    showScreen("certification");
+  }
+  if(t.id === "cohortStepper"){
+    state.cohortLearnerCount = parseInt(t.value, 10) || 24;
+    showScreen("programmes");
+  }
+});
+
+document.addEventListener("submit", (e)=>{
+  if(e.target.id === "learnerLogForm"){
+    e.preventDefault();
+    const date = $("#logDate").value;
+    const hours = parseFloat($("#logHours").value) || 0;
+    const task = $("#logTask").value;
+    const self = $("#logSelf").value;
+    state.learnerLogs.unshift({ date, hours, task, self });
+    showScreen("hosts");
+  }
+});
+
 $("#loginForm").addEventListener("submit",(e)=>{
   e.preventDefault();
+  const email = $("#loginEmail").value.trim().toLowerCase();
+  state.currentUser = email.includes("nkosi") || email.includes("learner") ? "learner" : "executive";
+  updateTopbarRole();
+
   const btn=$("#loginBtn"); btn.disabled=true;
   $("#loginBtnLabel").textContent="Signing in…";
   $("#loginSpinner").classList.remove("hidden");
@@ -2669,7 +3131,7 @@ $("#loginForm").addEventListener("submit",(e)=>{
     $("#app").classList.remove("hidden");
     if(!prefersReduced()){ $("#rail").classList.add("anim-rail-in"); $("#screen").classList.add("anim-fade-up"); }
     renderRail();
-    showScreen("dashboard");
+    showScreen(state.currentUser === "learner" ? "learnerDashboard" : "dashboard");
   }, delay);
 });
 
