@@ -1004,7 +1004,14 @@ function showScreen(id){
   // screen-specific wiring
   if(screenId==="dashboard" || screenId==="learnerDashboard") wireDashboard();
   if(screenId==="certification") { /* wired by delegation */ }
-}/* ---- Learner Dashboard ---- */
+}
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
+const SCREENS = {};
+
+/* ---- Learner Dashboard ---- */
 SCREENS.learnerDashboard = () => {
   const learner = DATA.academicRecords["L001"];
   const d = DATA.learnerDetail;
